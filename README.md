@@ -46,3 +46,12 @@ Favorite button for stories
 Edit and save buttons on the bottom of stories
 
 ## Middleware Design
+
+## Agenda
+- [ ] 2015-10-13: Finsih overarching design, finish login system
+- [ ] 2015-10-14: Finish setting datatable
+- [ ] 2015-10-15: Finish adding stories
+- [ ] 2015-10-16: Create favorite system
+- [ ] 2015-10-17: Finish favorite
+- [ ] 2015-10-18: PENTEST
+- [ ] 2015-10-19: ~~submit~~
