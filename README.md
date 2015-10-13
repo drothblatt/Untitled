@@ -29,5 +29,20 @@ user data-table (username, password-hash)
 favorite data-table (username, storyID)
 
 ## Frontend
+Nav bar on the left side with sign up, log in
+
+Search bar
+
+Browse menu
+
+Username drop down menu to log out when logged in
+
+Alerts/Notifications when stories are updated
+
+Separate boxes for displaying stories/contributors
+
+Favorite button for stories
+
+Edit and save buttons on the bottom of stories
 
 ## Middleware Design
