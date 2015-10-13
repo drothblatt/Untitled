@@ -21,7 +21,11 @@ Softdev database project -- collab story engine
 ## Backend Design
 ### Data-tables
 stories data-table (story ID, sentence, author, time)
+
+
 user data-table (username, password-hash)
+
+
 favorite data-table (username, storyID)
 
 ## Frontend
