@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+import time, hashlib
 
 app = Flask(__name__)
 
 userinfo = {"user": "password", "foo": "bar"}
+
 
 @app.route("/")
 @app.route("/home")
@@ -20,13 +22,14 @@ def login():
         password = request.form['password']
 
         if username in userinfo:
-            if userinfo[username] == password
+            if userinfo[username] == password:
                 session[username] = True
                 return redirect(url_for("home"))
             error = "Invalid username and password combo"
             return render_template("login.html", error = error)
         else:
             return redirect(url_for("register"))
+
 """
         //if username is in database:
             //if username/password combo valid:
@@ -48,7 +51,7 @@ def logout():
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
-     if request.method == "GET":
+    if request.method == "GET":
         return render_template("register.html")
     else:
         username = request.form['username']
