@@ -4,7 +4,7 @@ from time import time
 conn = sqlite3.connect("infos.db")
 c = conn.cursor()
 
-# input: username, hash (hexstring) of user's password
+# input: username, hash (hexstring) of user's password   
 # returns: true if the username is NOT in the database, and a user is created
 # returns; false if the username has been taken
 def newUser(username, passwordHash):
