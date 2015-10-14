@@ -23,10 +23,10 @@ Softdev database project -- collab story engine
 stories data-table (story ID, sentence, author, time)
 
 
-user data-table (username, password-hash)
+users data-table (username, password-hash)
 
 
-favorite data-table (username, storyID)
+favorites data-table (username, storyID)
 
 ## Frontend
 Nav bar on the left side with sign up, log in
