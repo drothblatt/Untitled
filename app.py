@@ -31,10 +31,13 @@ def login():
         return render_template("login.html", err = error)
         
     
-
 """
-        //if username is in database:
-            //if username/password combo valid:
+        m = hashlib.md5()
+        m.update(password)
+        passhash = m.hexdigest()
+        #if username is in database:
+            if authenticate(username, passhash):
+            
                 session["username"] = username
                 return redirect(url_for("home"))
             error = "Invalid username and password combo"
@@ -58,6 +61,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
+        # hard coded for testing
         if username in userinfo:
             error = "Username already in use"
             return render_template("register.html", err = error)
@@ -65,14 +69,19 @@ def register():
             userinfo[username] = password;
             return redirect(url_for("login"))
 
+# using database functions
 """
-        //if username in database:
-            error = "Username already in use"
-            return render_template("register.html", err = error)
-        else:
-            //add user to database
+        m = hashlib.md5()
+        m.update(password)
+        passhash = m.hexdigest()
+        if (newUser(username, passhash)):
             return redirect(url_for("login"))
+
+        error = "Username already in use"
+        return render_template("register.html", err = error)
+
 """
+
 
 
 
