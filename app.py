@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, session
-import utils, time, hashlib
+import time, hashlib
 
 app = Flask(__name__)
 
