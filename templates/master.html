@@ -12,13 +12,13 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="/home">
-            <img style="max-width:100px; margin-top:-2px;"
-            src="../static/Logo With Title.png">
+          <img style="max-width:100px; margin-top:-2px;"
+               src="../static/Logo With Title.png">
         </a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="/index">Home<span class="sr-only">(current)</span></a></li>
+          <li><a href="/home">Home<span class="sr-only">(current)</span></a></li>
           <li><a href="/calendar">Browse</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -29,8 +29,15 @@
           <li><a href="/login">Login</a></li>
 
 	  {% else %}
-
-          <li><a href="/logout">{{s.username}}</a></li>
+	  <div class="dropdown">
+	    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	      {{s.username}}
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+	      <li><a href="/logout">Logout</a></li>
+	    </ul>
+	  </div>
 
 	  {% endif %}
 
