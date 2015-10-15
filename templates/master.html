@@ -22,9 +22,18 @@
           <li><a href="/calendar">Browse</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+
+	  {% if "username" not in s %}
+	  
           <li><a href="/register">Sign Up</a></li>
           <li><a href="/login">Login</a></li>
-          <li><a href="/logout">Logout</a></li>
+
+	  {% else %}
+
+          <li><a href="/logout">{{s.username}}</a></li>
+
+	  {% endif %}
+
         </ul>
       </div>
     </div>
