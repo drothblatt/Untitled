@@ -1,7 +1,7 @@
 import sqlite3
 from time import time
 
-# input: username, hash (hexstring) of user's password   
+# input: username, hash (hexstring) of user's password
 # returns: true if the username is NOT in the database, and a user is created
 # returns; false if the username has been taken
 def newUser(username, passwordHash):
@@ -76,6 +76,14 @@ def getFavorites(username):
     result = c.execute(q).fetchall()
     for i in result:
         stories.append(getStory(i))
+
+def addFavorite(storyID, username):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+    q="""INSERT INTO favorites VALUES (%d, %s)""" %(storyID, username)
+    c.execute(q)
+    conn.commit()
+
 
 #print newUser("yeech", "12345")
 #print authenticate("yeech", "12345")
