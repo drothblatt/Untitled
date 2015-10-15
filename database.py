@@ -11,7 +11,8 @@ def newUser(username, passwordHash):
     q="""
     SELECT users.username
     FROM users
-    """
+    WHERE users.username = "%s"
+    """ % (username)
     usernames = c.execute(q).fetchall()
     if len(usernames) == 0:
         q="INSERT INTO users VALUES ('%s','%s')" % (username, passwordHash)
