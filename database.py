@@ -1,13 +1,13 @@
 import sqlite3
 from time import time
 
-conn = sqlite3.connect("infos.db")
-c = conn.cursor()
-
 # input: username, hash (hexstring) of user's password   
 # returns: true if the username is NOT in the database, and a user is created
 # returns; false if the username has been taken
 def newUser(username, passwordHash):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
     q="""
     SELECT users.username
     FROM users
@@ -25,6 +25,9 @@ def newUser(username, passwordHash):
 # input: username-passwordHash pair
 # output: true if the pair match, false if the pair does not
 def authenticate(uName, passwordHash):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
     q="""
     SELECT users.username, users.password
     FROM users
@@ -37,6 +40,9 @@ def authenticate(uName, passwordHash):
         return True;
 
 def getStory(storyID):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
     q = """SELECT stories.sentence
            FROM stories
            WHERE stories.id = %d
@@ -51,12 +57,18 @@ def getStory(storyID):
         return story
 
 def addSentence(storyID, sentence, author):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
     q = """INSERT INTO stories VALUES (%d, '%s', '%s', %d)""" % (storyID. sentence, author, int(time()))
     c.execute(q)
     conn.commit()
 
 # return a list of favorite stories
 def getFavorites(username):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
     stories = []
     q = """SELECT favorites.id
            FROM favorites

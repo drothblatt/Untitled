@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, session
-import time, hashlib, database
+import time, hashlib, sqlite3
+
+from database import *
 
 app = Flask(__name__)
 
@@ -60,22 +62,21 @@ def register():
         password = request.form['password']
        
         # hard coded for testing
-        if username in userinfo:
-            error = "Username already in use"
-            return render_template("register.html", err = error)
-        else:
-            userinfo[username] = password;
-            return redirect(url_for("login"))
-        """
+        #if username in userinfo:
+        #    error = "Username already in use"
+        #    return render_template("register.html", err = error)
+        #else:
+        #    userinfo[username] = password;
+        #    return redirect(url_for("login"))
         m = hashlib.md5()
         m.update(password)
         passhash = m.hexdigest()
-        if (database.newUser(username, passhash)):
+        print "HI THIS IS DONE"
+        if (newUser(username, passhash)):
             return redirect(url_for("login"))
 
         error = "Username already in use"
         return render_template("register.html", err = error)
-        """
 
 
 
