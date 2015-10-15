@@ -1,0 +1,18 @@
+
+{% extends "master.html" %}
+
+{% block body %}
+
+{% if err %}
+<hr>
+<p>{{err}}</p>
+<hr>
+{% endif %}
+
+<form method="POST">
+  Username: <input type="text" name="username" placeholder = "username">
+  Password: <input type="password" name="password" placeholder = "password">
+  <input type="submit" value="Enter">
+</form>
+
+{% endblock %}

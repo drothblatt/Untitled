@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, session
-import time, hashlib
+import time, hashlib, database
 
 app = Flask(__name__)
 
@@ -17,33 +17,31 @@ def home():
 def login():
     if "username" in session:
         return redirect(url_for("home"))
-    if request.method == "GET":
+    elif request.method == "GET":
         return render_template("login.html")
     else:
         username = request.form['username']
         password = request.form['password']
-
+        
         if username in userinfo:
             if userinfo[username] == password:
                 session["username"] = username
                 return redirect(url_for("home"))
         error = "Invalid username and password combo"
         return render_template("login.html", err = error)
-        
-    
-"""
+    """   
         m = hashlib.md5()
         m.update(password)
         passhash = m.hexdigest()
-        #if username is in database:
-            if authenticate(username, passhash):
+        if database.authenticate(username, passhash):
             
-                session["username"] = username
-                return redirect(url_for("home"))
+            session["username"] = username
+            return redirect(url_for("home"))
+        else:
             error = "Invalid username and password combo"
-            //return render_template("login.html", err = error) 
-            
-"""
+            return render_template("login.html", err = error) 
+    """        
+
 
     
 @app.route("/logout")
@@ -60,7 +58,7 @@ def register():
     else:
         username = request.form['username']
         password = request.form['password']
-
+       
         # hard coded for testing
         if username in userinfo:
             error = "Username already in use"
@@ -68,19 +66,18 @@ def register():
         else:
             userinfo[username] = password;
             return redirect(url_for("login"))
-
-# using database functions
-"""
+        """
         m = hashlib.md5()
         m.update(password)
         passhash = m.hexdigest()
-        if (newUser(username, passhash)):
+        if (database.newUser(username, passhash)):
             return redirect(url_for("login"))
 
         error = "Username already in use"
         return render_template("register.html", err = error)
+        """
 
-"""
+
 
 
 
