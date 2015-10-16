@@ -84,6 +84,11 @@ def addFavorite(storyID, username):
     c.execute(q)
     conn.commit()
 
+def getUniqueUsers(storyID):
+    #TODO Michael: take a list of everyone, convert to set and back, then select all users
+
+#TODO get next id
+
 
 #print newUser("yeech", "12345")
 #print authenticate("yeech", "12345")
