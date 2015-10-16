@@ -84,6 +84,33 @@ def addFavorite(storyID, username):
     c.execute(q)
     conn.commit()
 
+def getUniqueUsers(storyID):
+    #TODO Michael: take a list of everyone, convert to set and back, then select all users
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
+    q = """SELECT stories.author
+           FROM stories
+           WHERE stories.id = %d
+           """% (storyID)
+    result = c.execute(q).fetchall()
+    result = set(result)
+    result = list(result)
+    return result
+
+
+def getNumStories():
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
+    q = """SELECT stories.id
+           FROM stories
+           """
+    result = c.execute(q).fetchall()
+    length=len(result)
+    return result[(length-1)]
+
+
 
 #print newUser("yeech", "12345")
 #print authenticate("yeech", "12345")
