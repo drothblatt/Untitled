@@ -17,32 +17,23 @@ def home():
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
-    if "username" in session:
-        return redirect(url_for("home"))
-    elif request.method == "GET":
+    if request.method == "GET":
         return render_template("login.html")
     else:
         username = request.form['username']
         password = request.form['password']
-        
-        if username in userinfo:
-            if userinfo[username] == password:
-                session["username"] = username
-                return redirect(url_for("home"))
-        error = "Invalid username and password combo"
-        return render_template("login.html", err = error)
-    """   
+    
         m = hashlib.md5()
         m.update(password)
         passhash = m.hexdigest()
-        if database.authenticate(username, passhash):
-            
+
+        if authenticate(username, passhash):
+
             session["username"] = username
             return redirect(url_for("home"))
         else:
             error = "Invalid username and password combo"
             return render_template("login.html", err = error) 
-    """        
 
 
     
@@ -60,28 +51,30 @@ def register():
     else:
         username = request.form['username']
         password = request.form['password']
-       
-        # hard coded for testing
-        #if username in userinfo:
-        #    error = "Username already in use"
-        #    return render_template("register.html", err = error)
-        #else:
-        #    userinfo[username] = password;
-        #    return redirect(url_for("login"))
+        
         m = hashlib.md5()
         m.update(password)
         passhash = m.hexdigest()
-        print "HI THIS IS DONE"
         if (newUser(username, passhash)):
             return redirect(url_for("login"))
 
         error = "Username already in use"
         return render_template("register.html", err = error)
 
+#doesn't do jack
+@app.route("/browse")
+def browseStatic():
+    page = request.form["page"]
+    return render_template("browse.html")
 
 
-
-
+@app.route("/browse/<id>")
+def browse(id):
+    if id == "":
+        return redirect(url_for("browse"))
+    else:
+        story = getStory(id)
+        return render_template("browse.html", story = story)
 
         
    
