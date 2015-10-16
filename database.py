@@ -21,6 +21,7 @@ def newUser(username, passwordHash):
         return True
     else:
         return False
+    #TESTED, works right
 
 # input: username-passwordHash pair
 # output: true if the pair match, false if the pair does not
@@ -38,6 +39,7 @@ def authenticate(uName, passwordHash):
         return False
     else:
         return True;
+    #TESTED, works right
 
 def getStory(storyID):
     conn = sqlite3.connect("infos.db")
@@ -51,18 +53,20 @@ def getStory(storyID):
     if len(result) == 0:
         return ""
     else:
-        story = ""
+        story = []
         for i in result:
-            story += i + " "
+            story.append(i[0])
         return story
+    #TESTED: works
 
 def addSentence(storyID, sentence, author):
     conn = sqlite3.connect("infos.db")
     c = conn.cursor()
 
-    q = """INSERT INTO stories VALUES (%d, '%s', '%s', %d)""" % (storyID. sentence, author, int(time()))
+    q = """INSERT INTO stories VALUES (%d, '%s', '%s', %d)""" % (storyID, sentence, author, int(time()))
     c.execute(q)
     conn.commit()
+    #TESTED Works
 
 # return a list of favorite stories
 def getFavorites(username):
@@ -72,7 +76,7 @@ def getFavorites(username):
     stories = []
     q = """SELECT favorites.id
            FROM favorites
-           WHERE favorites.username = '%s'""" % (username)
+           WHERE favorites.username = %s""" % (username)
     result = c.execute(q).fetchall()
     for i in result:
         stories.append(getStory(i))
@@ -80,7 +84,7 @@ def getFavorites(username):
 def addFavorite(storyID, username):
     conn = sqlite3.connect("infos.db")
     c = conn.cursor()
-    q="""INSERT INTO favorites VALUES (%d, %s)""" %(storyID, username)
+    q="""INSERT INTO favorites VALUES (%s, '%s')""" %(storyID, username)
     c.execute(q)
     conn.commit()
 
@@ -91,7 +95,7 @@ def getUniqueUsers(storyID):
 
     q = """SELECT stories.author
            FROM stories
-           WHERE stories.id = %d
+           WHERE stories.id = %s
            """% (storyID)
     result = c.execute(q).fetchall()
     result = set(result)
@@ -112,7 +116,15 @@ def getNumStories():
 
 
 
-#print newUser("yeech", "12345")
-#print authenticate("yeech", "12345")
+print newUser("yeech", "12345")
+print authenticate("yeech", "12345")
 #print authenticate("yeech2", "12345")
 #print authenticate("yeech", "11111")
+addSentence(1,"HI! This is a sentence!","yeech")
+addSentence(2,"HI! This is a sentence in the second story","yeech")
+addSentence(1,"HI! This is the second sentence in the first story","yeech")
+addSentence(2,"HI! This is the second sentence in the second story","yeech")
+print getStory(1)
+print getStory(2)
+#addFavorite("yeech","2")
+#getFavorites("yeech")
