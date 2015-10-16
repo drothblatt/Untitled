@@ -51,7 +51,19 @@ def register():
     else:
         username = request.form['username']
         password = request.form['password']
+<<<<<<< HEAD
         
+=======
+        """
+        # hard coded for testing
+        if username in userinfo:
+            error = "Username already in use"
+            return render_template("register.html", err = error)
+        else:
+            userinfo[username] = password;
+            return redirect(url_for("login"))
+        """
+>>>>>>> a
         m = hashlib.md5()
         m.update(password)
         passhash = m.hexdigest()
@@ -60,6 +72,10 @@ def register():
 
         error = "Username already in use"
         return render_template("register.html", err = error)
+<<<<<<< HEAD
+=======
+        
+>>>>>>> a
 
 
 
