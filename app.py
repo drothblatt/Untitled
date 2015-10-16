@@ -61,11 +61,32 @@ def register():
         error = "Username already in use"
         return render_template("register.html", err = error)
 
+
+
 #doesn't do jack
 @app.route("/browse")
-def browseStatic():
-    page = request.form["page"]
-    return render_template("browse.html")
+def browseStories():
+    d = {}
+    numStories = getNumStories()
+    if numStories % 10 == 0:
+        d["numpages"] = numStories / 10
+    else:
+        d["numpages"] = (numStories / 10) + 1
+
+    if "page" in request.form:
+        page = request.form["page"]
+    else:
+        page = 1
+
+    storyid = (int(page) - 1) * 10 
+    l = []
+
+    for x in range(storyid, storyid + 10):
+        l.append(getStory(x))
+    d["stories"] = l
+
+    return render_template("browse.html", d = d)
+
 
 
 @app.route("/browse/<id>")

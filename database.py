@@ -108,7 +108,7 @@ def getNumStories():
            """
     result = c.execute(q).fetchall()
     length=len(result)
-    return result[(length-1)]
+    return length
 
 
 
