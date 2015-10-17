@@ -85,10 +85,9 @@ def browse(page):
     d = {}
     numStories = getNumStories()
     if numStories % 10 == 0:
-        d["numpages"] = numStories / 10
+        totalPage = numStories / 10
     else:
-        d["numpages"] = (numStories / 10) + 1
-
+        totalPage = (numStories / 10) + 1
     pg = page
     storyid = (pg - 1) * 10
     l = []
@@ -106,7 +105,7 @@ def browse(page):
         cat = []
         story = []
 
-    return render_template("browse.html", stories = l, s = session)
+    return render_template("browse.html", current = page, pages = totalPage, stories = l, s = session)
 
 
 

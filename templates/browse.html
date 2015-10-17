@@ -18,6 +18,17 @@
         <div class="panel-body">{{story[2]}}</div>
     </div>
   {% endfor %}
+  {% if pages > 1 %}
+  <ul class="pagination">
+      {% for p in range(1,pages+1) %}
+      <li
+      {% if p is sameas current %}
+      class="active"
+      {% endif %}
+      ><a href="/browse/{{p}}">{{p}}</a></li>
+      {% endfor %}
+  </ul>
+  {% endif %}
 </div>
 
 {% endblock %}
