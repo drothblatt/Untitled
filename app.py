@@ -79,10 +79,9 @@ def register():
 def browseStatic():
     return redirect(url_for("browse", page = 1))
 
-#doesn't do jack
+
 @app.route("/browse/<int:page>")
 def browse(page):
-    d = {}
     numStories = getNumStories()
     if numStories % 10 == 0:
         totalPage = numStories / 10
@@ -92,10 +91,10 @@ def browse(page):
     storyid = (pg - 1) * 10
     l = []
     cat = []
-
+    #THE OFFENDING AREA
     for x in range(storyid, storyid + 10):
         story = getStory(x)
-        if len(story) > 0:
+        if len(story) > 1:
             cat.append(x)
             cat.append(story[0])
             cat.append(story[1])
@@ -135,6 +134,12 @@ def create():
     else:
         title = request.form["title"]
         sentence = request.form["begin"]
+
+        title = title.replace("\'", "&apos;")
+        title = title.replace("\"", "&quot;")
+
+        sentence = sentence.replace("\'", "&apos;")
+        sentence = sentence.replace("\"", "&quot;")
 
         if not title or not sentence:
             error = "Please enter something before submitting"
