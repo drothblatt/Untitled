@@ -8,14 +8,16 @@
     <a href="/create" class="btn btn-success">Create +</a>
     </button>
   </p>
-<div class="panel panel-default">
-  <div class="panel-heading">Story 1</div>
-  <div class="panel-body">Sentence 1</div>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">Story 2</div>
-  <div class="panel-body">Sentence 2</div>
-</div>
+  {% for story in stories %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="/browse/stories/{{story[0]}}">
+                {{story[1]}}
+            </a>
+        </div>
+        <div class="panel-body">{{story[2]}}</div>
+    </div>
+  {% endfor %}
 </div>
 
 {% endblock %}

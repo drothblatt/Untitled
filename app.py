@@ -34,7 +34,7 @@ def login():
     else:
         username = request.form['username']
         password = request.form['password']
-    
+
         m = hashlib.md5()
         m.update(password)
         passhash = m.hexdigest()
@@ -44,11 +44,11 @@ def login():
             session["username"] = username
             return redirect(url_for("home"))
         else:
-            error = "Invalid username and password combo"
-            return render_template("login.html", err = error) 
+            error = "Invalid username and password combination"
+            return render_template("login.html", err = error)
 
 
-    
+
 @app.route("/logout")
 @login_required
 def logout():
@@ -68,7 +68,8 @@ def register():
         m.update(password)
         passhash = m.hexdigest()
         if (newUser(username, passhash)):
-            return redirect(url_for("login"))
+            smsg = "You will be redirected to the log-in page in a moment."
+            return render_template("register.html", success = smsg);
 
         error = "Username already in use"
         return render_template("register.html", err = error)
@@ -89,19 +90,23 @@ def browse(page):
         d["numpages"] = (numStories / 10) + 1
 
     pg = page
-    storyid = (pg - 1) * 10 
+    storyid = (pg - 1) * 10
     l = []
     cat = []
 
     for x in range(storyid, storyid + 10):
-        story = getStory(storyid)
-        if story:
-            cat[0] = story[0]
-            cat[1] = story[1]
+        story = getStory(x)
+        if len(story) > 0:
+            cat.append(x)
+            cat.append(story[0])
+            cat.append(story[1])
+        else:
+            break
         l.append(cat)
-    d["stories"] = l
+        cat = []
+        story = []
 
-    return render_template("browse.html", d = d, s = session)
+    return render_template("browse.html", stories = l, s = session)
 
 
 
@@ -141,8 +146,7 @@ def create():
             addSentence(storyid, title, author)
             addSentence(storyid, sentence, author)
             return redirect(url_for("browse", page = 1))
-        
-   
+
 if __name__ == "__main__":
     app.debug = True
     app.secret_key = "potatoes"
