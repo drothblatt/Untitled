@@ -46,6 +46,15 @@ Favorite button for stories
 Edit and save buttons on the bottom of stories
 
 ## Middleware Design
+###Routes
+
+- home
+- login/logout
+- register
+- browse
+- create
+
+
 
 ## Agenda
 - [ ] 2015-10-13: Finsih overarching design, finish login system

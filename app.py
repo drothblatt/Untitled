@@ -1,9 +1,13 @@
-from flask import Flask, render_template, request, session, redirect, url_for, session
+from flask import Flask, render_template, request, session, redirect, url_for
 import time, hashlib, sqlite3
 from functools import wraps
 from database import *
+from datetime import timedelta
 
 app = Flask(__name__)
+
+#app.permanent_session_lifetime = timedelta(minutes = 20)
+
 
 
 def login_required(f):
@@ -18,6 +22,7 @@ def login_required(f):
 @app.route("/")
 @app.route("/home")
 def home():
+    #session.permanent = True
     return render_template("home.html", s = session)
 
 
