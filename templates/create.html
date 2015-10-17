@@ -2,10 +2,16 @@
 
 {% block body %}
 
+{% if err %}
+<hr>
+<p>{{err}}</p>
+<hr>
+{% endif %}
+
 <form method="POST">
   Title of the story: <input type="text" name="title">
   First five sentences of the story: <input type="text" name="begin">
-  <input type="create" name="button" value="Publish">
+  <input type="submit" name="button" value="Publish">
 </form>
 
 {% endblock %}

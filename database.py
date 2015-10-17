@@ -115,7 +115,7 @@ def getNumStories():
     return length
 
 
-
+"""
 print newUser("yeech", "12345")
 print authenticate("yeech", "12345")
 #print authenticate("yeech2", "12345")
@@ -128,3 +128,4 @@ print getStory(1)
 print getStory(2)
 #addFavorite("yeech","2")
 #getFavorites("yeech")
+"""
