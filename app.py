@@ -102,11 +102,19 @@ def browse(page):
 
 @app.route("/browse/stories/<id>")
 def browseStory(id):
-    if id == "":
+    if not id:
         return redirect(url_for("browse", page = 1))
     else:
+        id = int(id)
         story = getStory(id)
-        return render_template("browse.html", story = story, s = session)
+        authors = getUniqueUsers(id)
+        d = {"title": story[0]}
+        st = ""
+        for x in range(1, len(story)):
+            st += story[x]
+        d["story"] = st
+        d["authors"] = authors
+        return render_template("browse.html", d = d, s = session)
 
 
 
