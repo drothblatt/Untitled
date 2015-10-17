@@ -59,3 +59,5 @@ target/
 # text backups
 .*~
 .*.swp
+
+infos.db
