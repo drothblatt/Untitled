@@ -6,7 +6,12 @@ from datetime import timedelta
 
 app = Flask(__name__)
 
-#app.permanent_session_lifetime = timedelta(minutes = 20)
+# automatically logs out after 10 min of inactivity
+@app.before_request
+def renew():
+    session.permenant = True
+    app.permanent_session_lifetime = timedelta(minutes = 10)
+    session.modified = True
 
 def detuple(list1):
     real = []
@@ -27,19 +32,37 @@ def login_required(f):
 @app.route("/home")
 def home():
     #session.permanent = True
+    if "username" in session:
+        return redirect(url_for("hohohome", username = session["username"]))
     return render_template("home.html", s = session)
 
 
 @app.route("/home/<username>")
 @login_required
-def userHome(username):
-    faves = detuple(getFavorites(username))
+def hohohome(username):
+    return redirect(url_for("userHome", username = username, page = 1))
 
+
+@app.route("/home/<username>/<int:page>")
+@login_required
+def userHome(username, page):
+    faves = detuple(getFavorites(username))
+    numStories = len(faves)
+    if numStories % 10 == 0:
+        totalPage = numStories / 10
+    else:
+        totalPage = (numStories / 10) + 1
+    pg = page
+    storyid = (pg - 1) * 10
     l = []
     cat = []
-    for x in faves:
-        story = getStory(x)
-        cat.append(x)
+
+    for x in range(storyid, storyid + 10):
+        if x >= numStories:
+            break;
+
+        story = getStory(faves[x])
+        cat.append(faves[x])
         cat.append(story[0])
         text = " ".join(story[1:])
         if len(text) > 300:
@@ -49,7 +72,7 @@ def userHome(username):
         l.append(cat)
         cat = []
         story = []
-    return render_template("home.html", s = session, faves = l)
+    return render_template("home.html", s = session, faves = l, current = page, pages = totalPage)
 
 
 
@@ -68,7 +91,7 @@ def login():
         if authenticate(username, passhash):
 
             session["username"] = username
-            return redirect(url_for("userHome", username = username))
+            return redirect(url_for("hohohome", username = username))
         else:
             error = "Invalid username and password combination"
             return render_template("login.html", err = error, s = session)
@@ -146,7 +169,7 @@ def browse(page):
 
 
 @app.route("/browse/stories/<id>")
-def browseStory(id):
+def browseStory(id, err=False):
     if not id:
         return redirect(url_for("browse", page = 1))
     else:
@@ -157,7 +180,7 @@ def browseStory(id):
         st = " ".join(story[1:])
         d["story"] = st
         d["authors"] = authors
-        return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id);
+        return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id, err = err);
 
 
 @app.route("/create", methods = ["GET", "POST"])
@@ -189,12 +212,12 @@ def create():
 @app.route("/edit/<int:id>")
 @login_required
 def edit(id):
+    session["beginTime%d" % id] = time()
     d = {}
     d["title"] = getStory(id)[0]
     d["story"] = " ".join(getStory(id)[1:])
-    return render_template("edit.html", d = d, s = session)
-
-
+    print getLastEditTime(id)
+    return render_template("edit.html", d = d, s = session, original="")
 
 @app.route("/edit/<int:id>", methods = ["GET", "POST"])
 @login_required
@@ -210,8 +233,13 @@ def edit2(id):
         sentence = sentence.replace("\"", "&quot;")
 
     if not sentence:
-        #error = "Please enter something before submitting"
-        return redirect(url_for("edit", id = id))
+        error = "Please enter something before submitting"
+        return render_template("edit.html", d = d, s = session, err=error)
+    # if story has changed after the guy started editing
+    elif getLastEditTime(id) > session["beginTime%d" % id]:
+        warning = "Someone has changed the story after you started editing. You may want to reconsider your text."
+        session["beginTime%d" % id] = time()
+        return render_template("edit.html", d = d, s = session, warn=warning, original = sentence)
     else:
         author = session["username"]
         addSentence(id, sentence, author)

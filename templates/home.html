@@ -3,6 +3,7 @@
 {% block body %}
 <div class="middleBody">
 
+<<<<<<< HEAD
   {% if "username" not in s %}
 
   <h1>Welcome to the world of stories</h1>
@@ -41,11 +42,61 @@
                >
         </button>
       </form>
+=======
+{% if "username" not in s %}
+
+<h1>Welcome to the world of stories</h1>
+<hr>
+
+<blockquote>
+<p><i>
+I wanted a perfect ending. Now I've learned, the hard way,
+that some poems don't rhyme, and some stories don't have a clear beginning,
+middle, and end.Life is about not knowing, having to change, taking the moment
+and making the best of it, without knowing what's going to happen next.
+Delicious Ambiguity.</i>
+<footer>Gilda Radner</footer>
+</blockquote>
+
+<p style="font-size:120%">Where will the next story take you? In this place, people cooperate together to work
+out the "perfect" path of their stories. Everyone can read and edit everyone else's story. What will happen next in the story? Who knows? <br><br>
+Want to start exploring? Click on "Browse" to see existing stories and sign
+up to create your own or edit the work of others! Click on "Browse" to see existing stories and sign
+up to create your own or edit the work of others! Register with us in orfer to be able to edit stories, start your
+own stories, save favorites, and browse them later. When creating a story, the first sentence will
+conventionally be the title of the story and from then on, each author can only add one sentence until someone else
+writes one in.</p>
+<br>
+
+{% else %}
+
+<h3>Hello, {{ s.username }}, welcome back!</h3>
+<hr>
+
+<h4>Favorites</h4>
+
+{% for story in faves %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="/browse/stories/{{story[0]}}">
+                {{story[1]|safe}}
+            </a>
+            <form method="POST" action="/favorite">
+                <input type="hidden" name="storyid" value="{{story[0]}}">
+                <button type="submit" class="pull-right"
+                    style="margin-top:-23px;">
+                    <img width="20px" src="/static/star-filled.png">
+                </button>
+            </form>
+        </div>
+        <div class="panel-body">{{story[2]|safe}}</div>
+>>>>>>> 57477be9cdb375bf886d089b6622e967337e6509
     </div>
     <div class="panel-body">{{fave[2]|safe}}</div>
   </div>
   {% endfor %}
 
+<<<<<<< HEAD
 
   {% endif %}
 
@@ -58,5 +109,8 @@
         Delicious Ambiguity.</i>
       <footer>Gilda Radner</footer>
   </blockquote>
+=======
+{% endif %}
+>>>>>>> 57477be9cdb375bf886d089b6622e967337e6509
 </div>
 {% endblock %}
