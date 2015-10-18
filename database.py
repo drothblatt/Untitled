@@ -69,16 +69,16 @@ def addSentence(storyID, sentence, author):
     #TESTED Works
 
 # return a list of favorite story ids
-def getFavorites(username):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
-
-    stories = []
-    q = """SELECT favorites.id
-           FROM favorites
-           WHERE favorites.username = '%s'""" % (username)
-    result = c.execute(q).fetchall()
-    return result
+#def getFavorites(username):
+#    conn = sqlite3.connect("infos.db")
+#    c = conn.cursor()
+#
+#    stories = []
+#    q = """SELECT favorites.id
+#           FROM favorites
+#           WHERE favorites.username = '%s'""" % (username)
+#    result = c.execute(q).fetchall()
+#    return result
 
 def changeFavorite(storyID, username):
     conn = sqlite3.connect("infos.db")
@@ -150,14 +150,14 @@ def getFavorites(username):
     stories = []
     q = """SELECT favorites.id
            FROM favorites
-           WHERE favorites.username = '%s'""" % (username)”””
+           WHERE favorites.username = '%s'""" % (username)
 
-     idList = c.execute(q).fetchall()
-     editedFaves=[]
-     for el in result:
-         if el in idList:
-             editedFaves.append(el[0])
-     return editedFaves
+    idList = c.execute(q).fetchall()
+    editedFaves=[]
+    for el in result:
+        if el in idList:
+            editedFaves.append(el[0])
+    return editedFaves
 # input: author
 # returns: a list of storyids that the author contributed to sorted in order of
 # last time he edited them
