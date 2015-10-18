@@ -10,12 +10,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script>
-      function countChar(val) {
+      function countChar(val, max) {
         var len = val.value.length;
-        if (len >= 300) {
+        if (len >= max) {
             $('#charNum').text(0);
         } else {
-            $('#charNum').text(300 - len);
+            $('#charNum').text(max - len);
         }
       };
     </script>

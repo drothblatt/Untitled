@@ -76,7 +76,7 @@ def getFavorites(username):
     stories = []
     q = """SELECT favorites.id
            FROM favorites
-           WHERE favorites.username = %s""" % (username)
+           WHERE favorites.username = '%s'""" % (username)
     result = c.execute(q).fetchall()
     for i in result:
         stories.append(getStory(i))

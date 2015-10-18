@@ -157,7 +157,7 @@ def edit(id):
     d = {}
     d["title"] = getStory(id)[0]
     d["story"] = " ".join(getStory(id)[1:])
-    return render_template("edit.html", d = d)
+    return render_template("edit.html", d = d, s = session)
 
 
 
@@ -167,18 +167,20 @@ def edit2(id):
     if request.method == "GET":
         return redirect(url_for("edit", id = 1))
     else:
+        d = {}
+        d["title"] = getStory(id)[0]
+        d["story"] = " ".join(getStory(id)[1:])
         sentence = request.form["next"]
         sentence = sentence.replace("\'", "&#39;")
         sentence = sentence.replace("\"", "&quot;")
 
     if not sentence:
         error = "Please enter something before submitting"
-        return render_template("edit.html", err = error, s = session)
+        return render_template("edit.html", err = error, s = session, d=d)
     else:
         author = session["username"]
         addSentence(id, sentence, author)
         return redirect(url_for("browseStory", id = id))
-# TODO
 
 
 @app.route("/favorite")
