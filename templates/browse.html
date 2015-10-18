@@ -29,6 +29,22 @@
       {% endfor %}
   </ul>
   {% endif %}
+  {% if edit %}
+  
+  <h3>{{ d["title"] }}</h3>
+    <div class="dropdown pull-right" style="margin-top:-40px;">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Contributors
+      <span class="caret"></span></button>
+      <ul class="dropdown-menu" align="right">
+          {% for author in d["authors"] %}
+              <li class="list-group-item">{{ author[0] }}</li>
+          {% endfor %}
+      </ul>
+    </div>
+  <br>
+  <p>{{ d["story"] }}</p>
+
+  {% endif %}
 </div>
 
 {% endblock %}

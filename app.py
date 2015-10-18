@@ -122,7 +122,7 @@ def browseStory(id):
             st += story[x]
         d["story"] = st
         d["authors"] = authors
-        return render_template("browse.html", d = d, s = session)
+        return render_template("browse.html", d = d, s = session, pages = 0, edit = True)
 
 
 
@@ -163,7 +163,7 @@ def favorite():
 
 
 @app.route("/favorites")
-@login.required
+@login_required
 def favorites():
     username = session["username"]
     faves = getFavorites(username)
