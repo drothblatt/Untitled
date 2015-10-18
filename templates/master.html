@@ -38,9 +38,8 @@
 
 	  {% if "username" in s %}
           <li><a href="/home/{{s.username}}">Home<span class="sr-only">(current)</span></a></li>
-	  {% else %}
-	  <li><a href="/home">Home<span class="sr-only">(current)</span></a></li>
-	  {% endif %}
+      {% endif %}
+	  <li><a href="/about">About<span class="sr-only">(current)</span></a></li>
 
           <li><a href="/browse">Stories</a></li>
         </ul>

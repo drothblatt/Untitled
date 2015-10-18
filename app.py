@@ -30,7 +30,12 @@ def login_required(f):
 
 
 @app.route("/")
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
 @app.route("/home")
+@login_required
 def home():
     if "username" in session:
         return redirect(url_for("hohohome", username = session["username"]))
