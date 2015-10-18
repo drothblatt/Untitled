@@ -41,7 +41,7 @@ def hohohome(username):
 @app.route("/home/<username>/<int:page>")
 @login_required
 def userHome(username, page):
-    faves = detuple(getFavorites(username))
+    faves = detuple(getEditedFavorites(username))
     numStories = len(faves)
     if numStories % 10 == 0:
         totalPage = numStories / 10
