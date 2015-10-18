@@ -26,6 +26,12 @@ def home():
     return render_template("home.html", s = session)
 
 
+@app.route("/home/<username>")
+@login_required
+def userHome(username):
+    faves = getFavorites(username)
+    return render_template("home.html", s = session, faves = faves)
+
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
@@ -42,10 +48,10 @@ def login():
         if authenticate(username, passhash):
 
             session["username"] = username
-            return redirect(url_for("home"))
+            return redirect(url_for("userHome", username = username))
         else:
             error = "Invalid username and password combination"
-            return render_template("login.html", err = error)
+            return render_template("login.html", err = error, s = session)
 
 
 
@@ -69,10 +75,10 @@ def register():
         passhash = m.hexdigest()
         if (newUser(username, passhash)):
             smsg = "You will be redirected to the log-in page in a moment."
-            return render_template("register.html", success = smsg);
+            return render_template("register.html", success = smsg, s = session);
 
         error = "Username already in use"
-        return render_template("register.html", err = error)
+        return render_template("register.html", err = error, s = session)
 
 
 @app.route("/browse")
@@ -128,6 +134,7 @@ def browseStory(id):
         d["authors"] = authors
         return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id);
 
+
 @app.route("/create", methods = ["GET", "POST"])
 @login_required
 def create():
@@ -168,7 +175,7 @@ def edit(id):
 @login_required
 def edit2(id):
     if request.method == "GET":
-        return redirect(url_for("edit", id = 1))
+        return redirect(url_for("edit", id = id))
     else:
         d = {}
         d["title"] = getStory(id)[0]
@@ -178,13 +185,17 @@ def edit2(id):
         sentence = sentence.replace("\"", "&quot;")
 
     if not sentence:
-        error = "Please enter something before submitting"
-        return render_template("edit.html", err = error, s = session, d=d)
+        #error = "Please enter something before submitting"
+        return redirect(url_for("edit", id = id))
     else:
         author = session["username"]
         addSentence(id, sentence, author)
         return redirect(url_for("browseStory", id = id))
 
+@app.route("/favorite") # why would they ever be here
+@login_required
+def whatevenhow():
+    return redirect(url_for("browseStatic"))
 
 @app.route("/favorite", methods = ["GET", "POST"])
 @login_required
@@ -196,12 +207,6 @@ def favorite():
     return redirect(url_for("browse", page = current))
 
 
-@app.route("/favorites")
-@login_required
-def favorites():
-    username = session["username"]
-    faves = getFavorites(username)
-    return render_template("favorites.html", s = session, faves = faves)
 
 
 if __name__ == "__main__":
