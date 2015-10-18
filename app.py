@@ -99,7 +99,10 @@ def browse(page):
         story = getStory(storyids[x])
         cat.append(storyids[x])
         cat.append(story[0])
-        cat.append(" ".join(story[1:][0:300]))
+        text = " ".join(story[1:])
+        if len(text) > 300:
+            text = text[0:297] + "..."
+        cat.append(text)
         l.append(cat)
         cat = []
         story = []
