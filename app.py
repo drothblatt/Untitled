@@ -135,10 +135,10 @@ def create():
         title = request.form["title"]
         sentence = request.form["begin"]
 
-        title = title.replace("\'", "&apos;")
+        title = title.replace("\'", "&#39;")
         title = title.replace("\"", "&quot;")
 
-        sentence = sentence.replace("\'", "&apos;")
+        sentence = sentence.replace("\'", "&#39;")
         sentence = sentence.replace("\"", "&quot;")
 
         if not title or not sentence:
