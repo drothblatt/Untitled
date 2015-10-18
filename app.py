@@ -86,7 +86,7 @@ def login():
         if authenticate(username, passhash):
 
             session["username"] = username
-            return redirect(url_for("userHome", username = username))
+            return redirect(url_for("hohohome", username = username))
         else:
             error = "Invalid username and password combination"
             return render_template("login.html", err = error, s = session)
