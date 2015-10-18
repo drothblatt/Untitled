@@ -165,12 +165,12 @@ def getEditedFavorites(username):
            FROM favorites
            WHERE favorites.username = '%s'""" % (username)
 
-     idList = c.execute(q).fetchall()
-     editedFaves=[]
-     for el in result:
-         if el in idList:
-             editedFaves.append(el[0])
-     return editedFaves
+    idList = c.execute(q).fetchall()
+    editedFaves=[]
+    for el in result:
+        if el in idList:
+            editedFaves.append(el[0])
+    return editedFaves
 # input: author
 # returns: a list of storyids that the author contributed to sorted in order of
 # last time he edited them
