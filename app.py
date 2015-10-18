@@ -163,7 +163,7 @@ def favorite():
 
 
 @app.route("/favorites")
-@login.required
+@login_required
 def favorites():
     username = session["username"]
     faves = getFavorites(username)
