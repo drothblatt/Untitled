@@ -115,6 +115,15 @@ def getNumStories():
     length=len(set(result))
     return length;
 
+def getStoryIDsByTime():
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
+    q = """SELECT stories.id
+           FROM stories
+           ORDER BY stories.time DESC
+           """
+    result = c.execute(q).fetchall()
 
 """
 print newUser("yeech", "12345")
