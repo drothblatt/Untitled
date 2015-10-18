@@ -1,0 +1,16 @@
+{% extends "master.html" %}
+
+{% block body %}
+
+<h3>{{ d["title"] }}</h3>
+  <br>
+  <p>{{ d["story"] }}</p>
+
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="to be continued...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Continue the story</button>
+      </span>
+    </div><!-- /input-group -->
+
+{% endblock %}
