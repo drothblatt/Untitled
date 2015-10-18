@@ -33,8 +33,24 @@ def home():
 @app.route("/home/<username>")
 @login_required
 def userHome(username):
-    faves = getFavorites(username)
-    return render_template("home.html", s = session, faves = faves)
+    faves = detuple(getFavorites(username))
+
+    l = []
+    cat = []
+    for x in faves:
+        story = getStory(x)
+        cat.append(x)
+        cat.append(story[0])
+        text = " ".join(story[1:])
+        if len(text) > 300:
+            text = text[0:297] + "..."
+        cat.append(text)
+        print cat
+        l.append(cat)
+        cat = []
+        story = []
+    return render_template("home.html", s = session, faves = l)
+
 
 
 @app.route("/login", methods = ["GET", "POST"])
