@@ -8,7 +8,11 @@ app = Flask(__name__)
 
 #app.permanent_session_lifetime = timedelta(minutes = 20)
 
-
+def detuple(list1):
+    real = []
+    for tup in list1:
+        real.append(tup[0])
+    return real
 
 def login_required(f):
     @wraps(f)
@@ -89,7 +93,8 @@ def browseStatic():
 @app.route("/browse/<int:page>")
 def browse(page):
     user = session["username"]
-    favorites = getFavorites(user)
+    favorites = detuple(getFavorites(user))
+    print favorites
     storyids = getStoryIDsByTime()
     numStories = len(storyids)
     if numStories % 10 == 0:
@@ -111,7 +116,8 @@ def browse(page):
         if len(text) > 300:
             text = text[0:297] + "..."
         cat.append(text)
-        cat.append((x,) in favorites)
+        cat.append(storyids[x] in favorites)
+        print cat
         l.append(cat)
         cat = []
         story = []
@@ -200,10 +206,13 @@ def whatevenhow():
 @app.route("/favorite", methods = ["GET", "POST"])
 @login_required
 def favorite():
+    if request.method == "GET":
+        return redirect(url_for("whatevenhow"))
     storyid = int(request.form["storyid"])
     username = session["username"]
     changeFavorite(storyid, username)
-    current = storyid / 10 + 1
+    storyids = getStoryIDsByTime();
+    current = storyids.index(storyid) / 10 + 1
     return redirect(url_for("browse", page = current))
 
 
