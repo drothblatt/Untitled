@@ -7,6 +7,17 @@
 
 <h1>Welcome to the world of stories</h1>
 <hr>
+
+<blockquote>
+<p><i>
+I wanted a perfect ending. Now I've learned, the hard way,
+that some poems don't rhyme, and some stories don't have a clear beginning,
+middle, and end.Life is about not knowing, having to change, taking the moment
+and making the best of it, without knowing what's going to happen next.
+Delicious Ambiguity.</i>
+<footer>Gilda Radner</footer>
+</blockquote>
+
 <p style="font-size:120%">Where will the next story take you? In this place, people cooperate together to work
 out the "perfect" path of their stories. Everyone can read and edit everyone else's story. What will happen next in the story? Who knows? <br><br>
 Want to start exploring? Click on "Browse" to see existing stories and sign
@@ -19,26 +30,22 @@ writes one in.</p>
 
 {% else %}
 
-<p style="font-size:120%">Hello, {{ s.username }}. Here are your favorited stories:
-</p>
+<p style="font-size:120%">Hello, {{ s.username }}, welcome back!</p>
+<hr>
+
+<h4>Favorites</h4>
 
 {% for story in faves %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <a href="/browse/stories/{{story[0]}}">
-                {{faves[1]|safe}}
+                {{story[1]|safe}}
             </a>
             <form method="POST" action="/favorite">
                 <input type="hidden" name="storyid" value="{{story[0]}}">
                 <button type="submit" class="pull-right"
                     style="margin-top:-23px;">
-                    <img width="20px" 
-                         {% if story[3] %}
-                            src="/static/star-filled.png"
-                         {% else %}
-                            src="/static/star-empty.png"
-                         {% endif %}
-                    >
+                    <img width="20px" src="/static/star-filled.png">
                 </button>
             </form>
         </div>
@@ -59,15 +66,5 @@ writes one in.</p>
   {% endif %}
 
 {% endif %}
-
-<blockquote>
-<p><i>
-I wanted a perfect ending. Now I've learned, the hard way,
-that some poems don't rhyme, and some stories don't have a clear beginning,
-middle, and end.Life is about not knowing, having to change, taking the moment
-and making the best of it, without knowing what's going to happen next.
-Delicious Ambiguity.</i>
-<footer>Gilda Radner</footer>
-</blockquote>
 </div>
 {% endblock %}

@@ -27,6 +27,8 @@ def login_required(f):
 @app.route("/home")
 def home():
     #session.permanent = True
+    if "username" in session:
+        return redirect(url_for("hohohome", username = session["username"]))
     return render_template("home.html", s = session)
 
 
@@ -39,7 +41,6 @@ def hohohome(username):
 @app.route("/home/<username>/<int:page>")
 @login_required
 def userHome(username, page):
-
     faves = detuple(getFavorites(username))
     numStories = len(faves)
     if numStories % 10 == 0:
@@ -55,8 +56,8 @@ def userHome(username, page):
         if x >= numStories:
             break;
 
-        story = getStory(fave[x])
-        cat.append(fav[x])
+        story = getStory(faves[x])
+        cat.append(faves[x])
         cat.append(story[0])
         text = " ".join(story[1:])
         if len(text) > 300:
