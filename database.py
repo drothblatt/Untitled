@@ -84,7 +84,7 @@ def getFavorites(username):
 def addFavorite(storyID, username):
     conn = sqlite3.connect("infos.db")
     c = conn.cursor()
-    q="""INSERT INTO favorites VALUES (%s, '%s')""" %(storyID, username)
+    q="""INSERT INTO favorites VALUES (%d, '%s')""" %(storyID, username)
     c.execute(q)
     conn.commit()
 
@@ -95,7 +95,7 @@ def getUniqueUsers(storyID):
 
     q = """SELECT stories.author
            FROM stories
-           WHERE stories.id = %s
+           WHERE stories.id = %d
            """% (storyID)
     result = c.execute(q).fetchall()
     result = set(result)
@@ -126,6 +126,6 @@ addSentence(1,"HI! This is the second sentence in the first story","yeech")
 addSentence(2,"HI! This is the second sentence in the second story","yeech")
 print getStory(1)
 print getStory(2)
-#addFavorite("yeech","2")
+#addFavorite("yeech",2)
 #getFavorites("yeech")
 """
