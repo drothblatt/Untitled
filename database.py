@@ -163,7 +163,7 @@ def getEditedFavorites(username):
     stories = []
     q = """SELECT favorites.id
            FROM favorites
-           WHERE favorites.username = '%s'""" % (username)”””
+           WHERE favorites.username = '%s'""" % (username)
 
      idList = c.execute(q).fetchall()
      editedFaves=[]
