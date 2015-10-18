@@ -151,6 +151,30 @@ def create():
             addSentence(storyid, sentence, author)
             return redirect(url_for("browse", page = 1))
 
+
+
+@app.route("/favorite")
+@login_required
+def favorite():
+    storyid = request.form["storyid"]
+    username = session["username"]
+    addFavorite(storyid, username)
+    #more to come
+
+
+@app.route("/favorites")
+@login.required
+def favorites():
+    username = session["username"]
+    faves = getFavorites(username)
+    return render_template("favorites.html", s = session, faves = faves)
+
+
+#@app.route("/edit")
+#@login_required
+
+
+
 if __name__ == "__main__":
     app.debug = True
     app.secret_key = "potatoes"
