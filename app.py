@@ -9,7 +9,7 @@ app = Flask(__name__)
 # automatically logs out after 10 min of inactivity
 @app.before_request
 def renew():
-    session.permenant = True
+    session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes = 10)
     session.modified = True
 
@@ -46,7 +46,8 @@ def hohohome(username):
 @app.route("/home/<username>/<int:page>")
 @login_required
 def userHome(username, page):
-    faves = detuple(getEditedFavorites(username))
+    faves = detuple(getFavorites(username))
+    editedFaves = detuple(getEditedFavorites(username))
     numStories = len(faves)
     if numStories % 10 == 0:
         totalPage = numStories / 10
@@ -63,7 +64,10 @@ def userHome(username, page):
 
         story = getStory(faves[x])
         cat.append(faves[x])
-        cat.append(story[0])
+        if faves[x] in editedFaves:
+            cat.append(story[0] +  " | <span class=\"bg-info\">edited</span>")
+        else:
+            cat.append(story[0])
         text = " ".join(story[1:])
         if len(text) > 300:
             text = text[0:297] + "..."
