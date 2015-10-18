@@ -122,9 +122,7 @@ def browseStory(id):
             st += story[x]
         d["story"] = st
         d["authors"] = authors
-        return render_template("browse.html", d = d, s = session, pages = 0, edit = True)
-
-
+        return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id);
 
 @app.route("/create", methods = ["GET", "POST"])
 @login_required
@@ -135,10 +133,10 @@ def create():
         title = request.form["title"]
         sentence = request.form["begin"]
 
-        title = title.replace("\'", "&apos;")
+        title = title.replace("\'", "&#39;")
         title = title.replace("\"", "&quot;")
 
-        sentence = sentence.replace("\'", "&apos;")
+        sentence = sentence.replace("\'", "&#39;")
         sentence = sentence.replace("\"", "&quot;")
 
         if not title or not sentence:
@@ -151,7 +149,19 @@ def create():
             addSentence(storyid, sentence, author)
             return redirect(url_for("browse", page = 1))
 
+@app.route("/edit/<int:id>")
+@login_required
+def edit(id):
+    d = {}
+    d["title"] = getStory(id)[0];
+    d["story"] = "".join(getStory(id)[1:]);
+    return render_template("edit.html", d = d)
 
+@app.route("/edit/<int:id>", methods = ["GET", "POST"])
+@login_required
+def edit2(id):
+    return render_template("edit.html")
+# TODO
 
 @app.route("/favorite")
 @login_required
@@ -168,12 +178,6 @@ def favorites():
     username = session["username"]
     faves = getFavorites(username)
     return render_template("favorites.html", s = session, faves = faves)
-
-
-@app.route("/edit")
-@login_required
-def edit():
-    return render_template("edit.html", s = session)
 
 
 if __name__ == "__main__":

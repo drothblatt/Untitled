@@ -12,10 +12,10 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <a href="/browse/stories/{{story[0]}}">
-                {{story[1]}}
+                {{story[1]|safe}}
             </a>
         </div>
-        <div class="panel-body">{{story[2]}}</div>
+        <div class="panel-body">{{story[2]|safe}}</div>
     </div>
   {% endfor %}
  
@@ -33,18 +33,20 @@
 
   {% if edit %}
   
-  <h3>{{ d["title"] }}</h3>
+  <h3>{{ d["title"]|safe }}</h3>
     <div class="dropdown pull-right" style="margin-top:-40px;">
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Contributors
       <span class="caret"></span></button>
       <ul class="dropdown-menu" align="right">
           {% for author in d["authors"] %}
-              <li class="list-group-item">{{ author[0] }}</li>
+              <li class="list-group-item">{{ author[0]|safe }}</li>
           {% endfor %}
       </ul>
     </div>
   <br>
-  <p>{{ d["story"] }}</p>
+  <p>{{ d["story"]|safe }}</p>
+  <br>
+  <a href="/edit/{{id}}" class="btn btn-info" role="button">Continue</a>
 
   {% endif %}
 

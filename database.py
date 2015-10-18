@@ -111,8 +111,9 @@ def getNumStories():
            FROM stories
            """
     result = c.execute(q).fetchall()
-    length=len(result)
-    return length - 1;
+    print result
+    length=len(set(result))
+    return length;
 
 
 """
