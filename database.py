@@ -11,12 +11,12 @@ def newUser(username, passwordHash):
     q="""
     SELECT users.username
     FROM users
-    WHERE users.username = "%s"
-    """ % (username)
-    usernames = c.execute(q).fetchall()
+    WHERE users.username = ?
+    """
+    usernames = c.execute(q, (username,)).fetchall()
     if len(usernames) == 0:
-        q="INSERT INTO users VALUES ('%s','%s')" % (username, passwordHash)
-        c.execute(q)
+        q="INSERT INTO users VALUES (?,?)"
+        c.execute(q, (username, passwordHash))
         conn.commit()
         return True
     else:
@@ -32,9 +32,9 @@ def authenticate(uName, passwordHash):
     q="""
     SELECT users.username, users.password
     FROM users
-    WHERE users.username = "%s" and users.password = "%s"
-    """ % (uName, passwordHash)
-    result = c.execute(q).fetchall() # gets it as a list
+    WHERE users.username = ? and users.password = ?
+    """
+    result = c.execute(q, (uName, passwordHash)).fetchall() # gets it as a list
     if len(result) == 0:
         return False
     else:
@@ -47,9 +47,9 @@ def getStory(storyID):
 
     q = """SELECT stories.sentence
            FROM stories
-           WHERE stories.id = %d
-           ORDER BY time""" % (storyID)
-    result = c.execute(q).fetchall()
+           WHERE stories.id = ?
+           ORDER BY time"""
+    result = c.execute(q, (storyID,)).fetchall()
     if len(result) == 0:
         return ""
     else:
@@ -63,8 +63,8 @@ def addSentence(storyID, sentence, author):
     conn = sqlite3.connect("infos.db")
     c = conn.cursor()
 
-    q = """INSERT INTO stories VALUES (%d, '%s', '%s', %d)""" % (storyID, sentence, author, int(time()))
-    c.execute(q)
+    q = """INSERT INTO stories VALUES (?, ?, ?, ?)"""
+    c.execute(q, (storyID, sentence, author, int(time())))
     conn.commit()
     #TESTED Works
 
@@ -85,19 +85,19 @@ def changeFavorite(storyID, username):
     c = conn.cursor()
     q = """SELECT *
            FROM favorites
-           WHERE favorites.username = '%s' AND favorites.id = %d
-           """ % (username, storyID)
-    result = c.execute(q).fetchall()
+           WHERE favorites.username = ? AND favorites.id = ?
+           """
+    result = c.execute(q, (username, storyID)).fetchall()
 # newly favorited
     if len(result) == 0:
-        q = """INSERT INTO favorites VALUES (%d, '%s')""" %(storyID, username)
-        c.execute(q)
+        q = """INSERT INTO favorites VALUES (?, ?)"""
+        c.execute(q, (storyID, username))
 # removes favorite
     else:
         q = """DELETE FROM favorites
-               WHERE favorites.username = '%s' AND favorites.id = %d
-            """ % (username, storyID)
-        c.execute(q)
+               WHERE favorites.username = ? AND favorites.id = ?
+            """
+        c.execute(q, (username, storyID))
     conn.commit()
 
 def getUniqueUsers(storyID):
@@ -106,9 +106,9 @@ def getUniqueUsers(storyID):
 
     q = """SELECT stories.author
            FROM stories
-           WHERE stories.id = %d
-           """% (storyID)
-    result = c.execute(q).fetchall()
+           WHERE stories.id = ?
+           """
+    result = c.execute(q, (storyID,)).fetchall()
     result = set(result)
     result = list(result)
     return result
@@ -149,9 +149,9 @@ def getFavorites(username):
     stories = []
     q = """SELECT favorites.id
            FROM favorites
-           WHERE favorites.username = '%s'""" % (username)
+           WHERE favorites.username = ?"""
 
-    result = c.execute(q).fetchall()
+    result = c.execute(q, (username,)).fetchall()
     return result
 
 def getEditedFavorites(username):
@@ -163,9 +163,9 @@ def getEditedFavorites(username):
     stories = []
     q = """SELECT favorites.id
            FROM favorites
-           WHERE favorites.username = '%s'""" % (username)
+           WHERE favorites.username = ?"""
 
-    idList = c.execute(q).fetchall()
+    idList = c.execute(q, (username,)).fetchall()
     editedFaves=[]
     for el in result:
         if el in idList:
@@ -180,11 +180,11 @@ def getStoriesByContributor(contributor):
 
     q = """SELECT stories.id
            FROM stories
-           WHERE author="%s"
+           WHERE author=?
            ORDER BY stories.time DESC
-           """ % (contributor)
+           """
 
-    result = c.execute(q).fetchall()
+    result = c.execute(q, (contributor,)).fetchall()
     uqList = []
     for el in result:
         uqList.append(el[0])
