@@ -196,12 +196,6 @@ def create():
         title = request.form["title"]
         sentence = request.form["begin"]
 
-        title = title.replace("\'", "&#39;")
-        title = title.replace("\"", "&quot;")
-
-        sentence = sentence.replace("\'", "&#39;")
-        sentence = sentence.replace("\"", "&quot;")
-
         if not title or not sentence:
             error = "Please enter something before submitting"
             return render_template("create.html", err = error, s = session)
@@ -233,8 +227,6 @@ def edit2(id):
         d["title"] = getStory(id)[0]
         d["story"] = " ".join(getStory(id)[1:])
         sentence = request.form["next"]
-        sentence = sentence.replace("\'", "&#39;")
-        sentence = sentence.replace("\"", "&quot;")
 
     if not sentence:
         error = "Please enter something before submitting"
