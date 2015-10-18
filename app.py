@@ -120,9 +120,7 @@ def browseStory(id):
         story = getStory(id)
         authors = getUniqueUsers(id)
         d = {"title": story[0]}
-        st = ""
-        for x in range(1, len(story)):
-            st += story[x]
+        st = " ".join(story[1:])
         d["story"] = st
         d["authors"] = authors
         return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id);
@@ -157,8 +155,8 @@ def create():
 @login_required
 def edit(id):
     d = {}
-    d["title"] = getStory(id)[0];
-    d["story"] = "".join(getStory(id)[1:]);
+    d["title"] = getStory(id)[0]
+    d["story"] = " ".join(getStory(id)[1:])
     return render_template("edit.html", d = d)
 
 
