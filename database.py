@@ -208,6 +208,19 @@ def getLastEditTime(storyID):
     result = c.execute(q, (storyID,)).fetchall()
     return result[0][0]
 
+def getLastEditor(storyID):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
+    q = """SELECT stories.author
+           FROM stories
+           WHERE stories.id=?
+           ORDER BY stories.time DESC"""
+
+    result = c.execute(q, (storyID,)).fetchall()
+    return result[0][0]
+
+
 """
 print newUser("yeech", "12345")
 print authenticate("yeech", "12345")

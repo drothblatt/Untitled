@@ -64,7 +64,7 @@ def userHome(username, page):
         story = getStory(faves[x])
         cat.append(faves[x])
         if faves[x] in editedFaves:
-            cat.append(story[0] +  " | <span class=\"bg-info\">edited</span>")
+            cat.append(story[0] +  " | <span class=\"text-success\"> Last edited by %s </span>" % (getLastEditor(faves[x])))
         else:
             cat.append(story[0])
         text = " ".join(story[1:])
