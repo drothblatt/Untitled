@@ -170,8 +170,7 @@ def favorites():
     return render_template("favorites.html", s = session, faves = faves)
 
 
-#@app.route("/edit")
-#@login_required
+
 
 
 

@@ -18,6 +18,7 @@
         <div class="panel-body">{{story[2]|safe}}</div>
     </div>
   {% endfor %}
+ 
   {% if pages > 1 %}
   <ul class="pagination">
       {% for p in range(1,pages+1) %}
@@ -29,6 +30,7 @@
       {% endfor %}
   </ul>
   {% endif %}
+
   {% if edit %}
   
   <h3>{{ d["title"]|safe }}</h3>
@@ -45,6 +47,7 @@
   <p>{{ d["story"]|safe }}</p>
 
   {% endif %}
+
 </div>
 
 {% endblock %}
