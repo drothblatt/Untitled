@@ -3,6 +3,7 @@ import time, hashlib, sqlite3
 from functools import wraps
 from database import *
 from datetime import timedelta
+from sys import argc, argv
 
 app = Flask(__name__)
 
@@ -263,5 +264,8 @@ def favorite():
 
 if __name__ == "__main__":
     app.debug = True
-    app.secret_key = "potatoes"
+    if argc > 0:
+        app.secret_key = argv[0]
+    else:
+        app.secret_key = "potatos"
     app.run(host = '0.0.0.0', port = 8000)
