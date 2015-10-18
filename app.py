@@ -92,9 +92,12 @@ def browseStatic():
 
 @app.route("/browse/<int:page>")
 def browse(page):
-    user = session["username"]
-    favorites = detuple(getFavorites(user))
-    print favorites
+    if "username" not in session:
+        favorites = []
+    else:
+        user = session["username"]
+        favorites = detuple(getFavorites(user))
+        print favorites
     storyids = getStoryIDsByTime()
     numStories = len(storyids)
     if numStories % 10 == 0:
