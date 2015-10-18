@@ -43,7 +43,8 @@
             </a>
             <form method="POST" action="/favorite">
                 <input type="hidden" name="storyid" value="{{story[0]}}">
-                <button type="submit" class="pull-right"
+                <button type="submit" class="pull-right" data-toggle="tooltip"
+                                                         title="favorite/unfavorite"
                     style="margin-top:-23px;">
                     <img width="20px" 
                          {% if story[3] %}
