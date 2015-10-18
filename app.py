@@ -66,7 +66,7 @@ def userHome(username, page):
         if faves[x] in editedFaves:
             cat.append(story[0] +  " | <span class=\"text-success\"> Last edited by %s </span>" % (getLastEditor(faves[x])))
         else:
-            cat.append(story[0])
+            cat.append(story[0] + " | <span class=\"text-success\"> Last edited by you </span>")
         text = " ".join(story[1:])
         if len(text) > 300:
             text = text[0:297] + "..."
@@ -156,7 +156,8 @@ def browse(page):
             break;
         story = getStory(storyids[x])
         cat.append(storyids[x])
-        cat.append(story[0])
+        cat.append(story[0] +  " | <span class=\"text-success\"> Last edited by %s </span>" % (getLastEditor(storyids[x])))
+
         text = " ".join(story[1:])
         if len(text) > 300:
             text = text[0:297] + "..."
@@ -263,9 +264,9 @@ def favorite():
     changeFavorite(storyid, username)
     storyids = getStoryIDsByTime();
     current = storyids.index(storyid) / 10 + 1
+    if "home" in request.form:
+        return redirect(url_for("hohohome", username = username))
     return redirect(url_for("browse", page = current))
-
-
 
 
 if __name__ == "__main__":

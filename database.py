@@ -173,9 +173,11 @@ def getEditedFavorites(username):
                FROM stories
                WHERE stories.author = ? AND stories.id = ?
                ORDER BY stories.time DESC"""
-        myLastEdit = c.execute(q, (username, el[0])).fetchall()[0][0]
-        if lastEdit > myLastEdit:
-            editedFaves.append(el)
+        myLastEdit = c.execute(q, (username, el[0])).fetchall()
+        if len(myLastEdit) > 0:
+            myLastEdit = myLastEdit[0][0]
+            if lastEdit > myLastEdit:
+                editedFaves.append(el)
     return editedFaves
 # input: author
 # returns: a list of storyids that the author contributed to sorted in order of
