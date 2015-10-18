@@ -124,6 +124,7 @@ def getStoryIDsByTime():
            ORDER BY stories.time DESC
            """
     result = c.execute(q).fetchall()
+    return result
 
 """
 print newUser("yeech", "12345")
@@ -134,8 +135,14 @@ addSentence(1,"HI! This is a sentence!","yeech")
 addSentence(2,"HI! This is a sentence in the second story","yeech")
 addSentence(1,"HI! This is the second sentence in the first story","yeech")
 addSentence(2,"HI! This is the second sentence in the second story","yeech")
+addSentence(3,"HI! This is the first sentence in the third story","michael")
+addSentence(2,"HI! This is the second sentence in the second story","yeech")
+addSentence(1,"HI! This is the second sentence in the first story","yeech")
+addSentence(3,"HI! This is the second sentence in the first story","yeech")
+addSentence(3,"HI! This is the second sentence in the first story","yeech")
 print getStory(1)
 print getStory(2)
 #addFavorite("yeech",2)
 #getFavorites("yeech")
+print getStoryIDsByTime()
 """
