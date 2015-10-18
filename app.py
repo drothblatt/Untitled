@@ -32,14 +32,31 @@ def home():
 
 @app.route("/home/<username>")
 @login_required
-def userHome(username):
-    faves = detuple(getFavorites(username))
+def hohohome(username):
+    return redirect(url_for("userHome", username = username, page = 1))
 
+
+@app.route("/home/<username>/<int:page>")
+@login_required
+def userHome(username, page):
+
+    faves = detuple(getFavorites(username))
+    numStories = len(faves)
+    if numStories % 10 == 0:
+        totalPage = numStories / 10
+    else:
+        totalPage = (numStories / 10) + 1
+    pg = page
+    storyid = (pg - 1) * 10
     l = []
     cat = []
-    for x in faves:
-        story = getStory(x)
-        cat.append(x)
+
+    for x in range(storyid, storyid + 10):
+        if x >= numStories:
+            break;
+
+        story = getStory(fave[x])
+        cat.append(fav[x])
         cat.append(story[0])
         text = " ".join(story[1:])
         if len(text) > 300:
@@ -49,7 +66,7 @@ def userHome(username):
         l.append(cat)
         cat = []
         story = []
-    return render_template("home.html", s = session, faves = l)
+    return render_template("home.html", s = session, faves = l, current = page, pages = totalPage)
 
 
 
