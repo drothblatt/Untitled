@@ -141,6 +141,23 @@ def getStoryIDsByTime():
             uqList.append(el[0])
     return uqList
 
+def getFavorites(username):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
+    result = getStoryIDsByTime()
+
+    stories = []
+    q = """SELECT favorites.id
+           FROM favorites
+           WHERE favorites.username = '%s'""" % (username)”””
+
+     idList = c.execute(q).fetchall()
+     editedFaves=[]
+     for el in idList:
+	    if el[0] in result:
+		    editedFaves.append(el[0])
+        return editedFaves
 # input: author
 # returns: a list of storyids that the author contributed to sorted in order of
 # last time he edited them
