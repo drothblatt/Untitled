@@ -97,7 +97,6 @@ def getUniqueUsers(storyID):
            WHERE stories.id = %d
            """% (storyID)
     result = c.execute(q).fetchall()
-    print result
     result = set(result)
     result = list(result)
     return result
@@ -124,14 +123,32 @@ def getStoryIDsByTime():
            ORDER BY stories.time DESC
            """
     result = c.execute(q).fetchall()
-    print result
 # unique-ify the result, but keep the order
     uqList = []
     for el in result:
         if el[0] not in uqList:
             uqList.append(el[0])
-    print uqList
     return uqList
+
+# input: author
+# returns: a list of storyids that the author contributed to sorted in order of
+# last time he edited them
+def getStoriesByContributor(contributor):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
+    q = """SELECT stories.id
+           FROM stories
+           WHERE author="%s"
+           ORDER BY stories.time DESC
+           """ % (contributor)
+
+    result = c.execute(q).fetchall()
+    uqList = []
+    for el in result:
+        uqList.append(el[0])
+    return uqList
+
 
 """
 print newUser("yeech", "12345")
