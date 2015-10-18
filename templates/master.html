@@ -30,7 +30,13 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="/home">Home<span class="sr-only">(current)</span></a></li>
+
+	  {% if "username" in s %}
+          <li><a href="/home/{{s.username}}">Home<span class="sr-only">(current)</span></a></li>
+	  {% else %}
+	  <li><a href="/home">Home<span class="sr-only">(current)</span></a></li>
+	  {% endif %}
+
           <li><a href="/browse">Browse</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
