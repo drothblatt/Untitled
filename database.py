@@ -166,10 +166,16 @@ def getEditedFavorites(username):
            WHERE favorites.username = ?"""
 
     idList = c.execute(q, (username,)).fetchall()
-    editedFaves=[]
-    for el in result:
-        if el in idList:
-            editedFaves.append(el[0])
+    editedFaves = []
+    for el in idList:
+        lastEdit = getLastEditTime(el[0])
+        q = """SELECT stories.time
+               FROM stories
+               WHERE stories.author = ? AND stories.id = ?
+               ORDER BY stories.time DESC"""
+        myLastEdit = c.execute(q, (username, el[0])).fetchall()[0][0]
+        if lastEdit > myLastEdit:
+            editedFaves.append(el)
     return editedFaves
 # input: author
 # returns: a list of storyids that the author contributed to sorted in order of
