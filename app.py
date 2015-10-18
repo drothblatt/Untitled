@@ -163,7 +163,7 @@ def browse(page):
             text = text[0:297] + "..."
         cat.append(text)
         cat.append(storyids[x] in favorites)
-        cat.append(getLastEditor(faves[x]))
+        cat.append(getLastEditor(storyids[x]))
         l.append(cat)
         cat = []
         story = []
