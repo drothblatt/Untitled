@@ -63,15 +63,16 @@ def userHome(username, page):
 
         story = getStory(faves[x])
         cat.append(faves[x])
-        if faves[x] in editedFaves:
-            cat.append(story[0] +  " | <span class=\"text-success\"> Last edited by %s </span>" % (getLastEditor(faves[x])))
-        else:
-            cat.append(story[0] + " | <span class=\"text-success\"> Last edited by you </span>")
+        cat.append(story[0])
         text = " ".join(story[1:])
         if len(text) > 300:
             text = text[0:297] + "..."
         cat.append(text)
-        print cat
+        if faves[x] in editedFaves:
+            cat.append(getLastEditor(faves[x]))
+        else:
+            cat.append("You")
+
         l.append(cat)
         cat = []
         story = []
@@ -156,14 +157,13 @@ def browse(page):
             break;
         story = getStory(storyids[x])
         cat.append(storyids[x])
-        cat.append(story[0] +  " | <span class=\"text-success\"> Last edited by %s </span>" % (getLastEditor(storyids[x])))
-
+        cat.append(story[0])
         text = " ".join(story[1:])
         if len(text) > 300:
             text = text[0:297] + "..."
         cat.append(text)
         cat.append(storyids[x] in favorites)
-        print cat
+        cat.append(getLastEditor(faves[x]))
         l.append(cat)
         cat = []
         story = []

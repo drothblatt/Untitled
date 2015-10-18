@@ -38,7 +38,7 @@ writes one in.</p>
     <div class="panel panel-default">
         <div class="panel-heading">
             <a href="/browse/stories/{{story[0]}}">
-                {{story[1]}}
+                {{story[1]}} | <span class="text-success"> Last edited by {{story[3]}} </span>
             </a>
             <form method="POST" action="/favorite">
                 <input type="hidden" name="storyid" value="{{story[0]}}">
