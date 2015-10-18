@@ -82,6 +82,8 @@ def browseStatic():
 
 @app.route("/browse/<int:page>")
 def browse(page):
+    user = session["username"]
+    favorites = getFavorites(user)
     storyids = getStoryIDsByTime()
     numStories = len(storyids)
     if numStories % 10 == 0:
@@ -103,6 +105,7 @@ def browse(page):
         if len(text) > 300:
             text = text[0:297] + "..."
         cat.append(text)
+        cat.append((x,) in favorites)
         l.append(cat)
         cat = []
         story = []
@@ -183,13 +186,14 @@ def edit2(id):
         return redirect(url_for("browseStory", id = id))
 
 
-@app.route("/favorite")
+@app.route("/favorite", methods = ["GET", "POST"])
 @login_required
 def favorite():
-    storyid = request.form["storyid"]
+    storyid = int(request.form["storyid"])
     username = session["username"]
-    addFavorite(storyid, username)
-    #more to come
+    changeFavorite(storyid, username)
+    current = storyid / 10 + 1
+    return redirect(url_for("browse", page = current))
 
 
 @app.route("/favorites")

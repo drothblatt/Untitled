@@ -68,7 +68,7 @@ def addSentence(storyID, sentence, author):
     conn.commit()
     #TESTED Works
 
-# return a list of favorite stories
+# return a list of favorite story ids
 def getFavorites(username):
     conn = sqlite3.connect("infos.db")
     c = conn.cursor()
@@ -78,14 +78,26 @@ def getFavorites(username):
            FROM favorites
            WHERE favorites.username = '%s'""" % (username)
     result = c.execute(q).fetchall()
-    for i in result:
-        stories.append(getStory(i))
+    return result
 
-def addFavorite(storyID, username):
+def changeFavorite(storyID, username):
     conn = sqlite3.connect("infos.db")
     c = conn.cursor()
-    q="""INSERT INTO favorites VALUES (%d, '%s')""" %(storyID, username)
-    c.execute(q)
+    q = """SELECT *
+           FROM favorites
+           WHERE favorites.username = '%s' AND favorites.id = %d
+           """ % (username, storyID)
+    result = c.execute(q).fetchall()
+# newly favorited
+    if len(result) == 0:
+        q = """INSERT INTO favorites VALUES (%d, '%s')""" %(storyID, username)
+        c.execute(q)
+# removes favorite
+    else:
+        q = """DELETE FROM favorites
+               WHERE favorites.username = '%s' AND favorites.id = %d
+            """ % (username, storyID)
+        c.execute(q)
     conn.commit()
 
 def getUniqueUsers(storyID):
@@ -110,7 +122,6 @@ def getNumStories():
            FROM stories
            """
     result = c.execute(q).fetchall()
-    print result
     length=len(set(result))
     return length;
 
