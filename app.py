@@ -174,6 +174,9 @@ def edit2(id):
     if request.method == "GET":
         return redirect(url_for("edit", id = id))
     else:
+        d = {}
+        d["title"] = getStory(id)[0]
+        d["story"] = " ".join(getStory(id)[1:])
         sentence = request.form["next"]
         sentence = sentence.replace("\'", "&#39;")
         sentence = sentence.replace("\"", "&quot;")
