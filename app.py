@@ -91,7 +91,7 @@ def browse(page):
     storyid = (pg - 1) * 10
     l = []
     cat = []
-    #THE OFFENDING AREA
+ 
     for x in range(storyid, storyid + 10):
         story = getStory(x)
         if len(story) > 1:
@@ -100,7 +100,7 @@ def browse(page):
             cat.append(story[1])
         else:
             break
-        l.append(cat)
+        l.insert(0, cat)
         cat = []
         story = []
 
@@ -170,8 +170,10 @@ def favorites():
     return render_template("favorites.html", s = session, faves = faves)
 
 
-
-
+@app.route("/edit")
+@login_required
+def edit():
+    return render_template("edit.html", s = session)
 
 
 if __name__ == "__main__":
