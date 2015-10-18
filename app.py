@@ -212,12 +212,12 @@ def create():
 @app.route("/edit/<int:id>")
 @login_required
 def edit(id):
+    session["beginTime%d" % id] = time()
     d = {}
     d["title"] = getStory(id)[0]
     d["story"] = " ".join(getStory(id)[1:])
-    return render_template("edit.html", d = d, s = session)
-
-
+    print getLastEditTime(id)
+    return render_template("edit.html", d = d, s = session, original="")
 
 @app.route("/edit/<int:id>", methods = ["GET", "POST"])
 @login_required
@@ -235,6 +235,11 @@ def edit2(id):
     if not sentence:
         error = "Please enter something before submitting"
         return render_template("edit.html", d = d, s = session, err=error)
+    # if story has changed after the guy started editing
+    elif getLastEditTime(id) > session["beginTime%d" % id]:
+        warning = "Someone has changed the story after you started editing. You may want to reconsider your text."
+        session["beginTime%d" % id] = time()
+        return render_template("edit.html", d = d, s = session, warn=warning, original = sentence)
     else:
         author = session["username"]
         addSentence(id, sentence, author)

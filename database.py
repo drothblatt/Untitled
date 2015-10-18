@@ -190,6 +190,17 @@ def getStoriesByContributor(contributor):
         uqList.append(el[0])
     return uqList
 
+def getLastEditTime(storyID):
+    conn = sqlite3.connect("infos.db")
+    c = conn.cursor()
+
+    q = """SELECT stories.time
+           FROM stories
+           WHERE stories.id=?
+           ORDER BY stories.time DESC"""
+
+    result = c.execute(q, (storyID,)).fetchall()
+    return result[0][0]
 
 """
 print newUser("yeech", "12345")
