@@ -15,9 +15,9 @@ q = "CREATE TABLE %s (%s)" # format string for creating tables,
 
 c.execute(q % ("users", "username TEXT, password TEXT")) # NOTE: hex string will do fine for hash
 
-c.execute(q % ("stories", "id TEXT, sentence TEXT, author TEXT, time INTEGER"))
+c.execute(q % ("stories", "id INTEGER, sentence TEXT, author TEXT, time INTEGER"))
 
-c.execute(q % ("favorites", "id TEXT, username TEXT"))
+c.execute(q % ("favorites", "id INTEGER, username TEXT"))
 
 addSentence(0,"HI! This is a sentence!","yeech")
 addSentence(0,"HI! This is the second sentence in the first story","yeech")
