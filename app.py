@@ -6,7 +6,12 @@ from datetime import timedelta
 
 app = Flask(__name__)
 
-#app.permanent_session_lifetime = timedelta(minutes = 20)
+# automatically logs out after 10 min of inactivity
+@app.before_request
+def renew():
+    session.permenant = True
+    app.permanent_session_lifetime = timedelta(minutes = 10)
+    session.modified = True
 
 def detuple(list1):
     real = []
@@ -164,7 +169,7 @@ def browse(page):
 
 
 @app.route("/browse/stories/<id>")
-def browseStory(id):
+def browseStory(id, err=False):
     if not id:
         return redirect(url_for("browse", page = 1))
     else:
@@ -175,7 +180,7 @@ def browseStory(id):
         st = " ".join(story[1:])
         d["story"] = st
         d["authors"] = authors
-        return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id);
+        return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id, err = err);
 
 
 @app.route("/create", methods = ["GET", "POST"])
@@ -207,12 +212,12 @@ def create():
 @app.route("/edit/<int:id>")
 @login_required
 def edit(id):
+    session["beginTime%d" % id] = time()
     d = {}
     d["title"] = getStory(id)[0]
     d["story"] = " ".join(getStory(id)[1:])
-    return render_template("edit.html", d = d, s = session)
-
-
+    print getLastEditTime(id)
+    return render_template("edit.html", d = d, s = session, original="")
 
 @app.route("/edit/<int:id>", methods = ["GET", "POST"])
 @login_required
@@ -228,8 +233,13 @@ def edit2(id):
         sentence = sentence.replace("\"", "&quot;")
 
     if not sentence:
-        #error = "Please enter something before submitting"
-        return redirect(url_for("edit", id = id))
+        error = "Please enter something before submitting"
+        return render_template("edit.html", d = d, s = session, err=error)
+    # if story has changed after the guy started editing
+    elif getLastEditTime(id) > session["beginTime%d" % id]:
+        warning = "Someone has changed the story after you started editing. You may want to reconsider your text."
+        session["beginTime%d" % id] = time()
+        return render_template("edit.html", d = d, s = session, warn=warning, original = sentence)
     else:
         author = session["username"]
         addSentence(id, sentence, author)

@@ -6,6 +6,13 @@
 
 
   {% if edit %}
+  {% if err %}
+  <div class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Edit Failed!</strong> Sorry, someone else is editing this right now, please try again later.
+</div>
+
+  {% endif %}
   
   <h3>{{ d["title"]|safe }}</h3>
     <div class="dropdown pull-right" style="margin-top:-40px;">
