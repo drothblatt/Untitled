@@ -3,7 +3,7 @@ import time, hashlib, sqlite3
 from functools import wraps
 from database import *
 from datetime import timedelta
-from sys import argc, argv
+from sys import argv
 
 app = Flask(__name__)
 
@@ -141,7 +141,6 @@ def browse(page):
     else:
         user = session["username"]
         favorites = detuple(getFavorites(user))
-        print favorites
     storyids = getStoryIDsByTime()
     numStories = len(storyids)
     if numStories % 10 == 0:
@@ -215,7 +214,6 @@ def edit(id):
     d = {}
     d["title"] = getStory(id)[0]
     d["story"] = " ".join(getStory(id)[1:])
-    print getLastEditTime(id)
     return render_template("edit.html", d = d, s = session, original="")
 
 @app.route("/edit/<int:id>", methods = ["GET", "POST"])
@@ -264,8 +262,8 @@ def favorite():
 
 if __name__ == "__main__":
     app.debug = True
-    if argc > 0:
-        app.secret_key = argv[0]
+    if len(argv) > 1:
+        app.secret_key = argv[1]
     else:
         app.secret_key = "potatos"
     app.run(host = '0.0.0.0', port = 8000)
