@@ -124,7 +124,14 @@ def getStoryIDsByTime():
            ORDER BY stories.time DESC
            """
     result = c.execute(q).fetchall()
-    return result
+    print result
+# unique-ify the result, but keep the order
+    uqList = []
+    for el in result:
+        if el[0] not in uqList:
+            uqList.append(el[0])
+    print uqList
+    return uqList
 
 """
 print newUser("yeech", "12345")

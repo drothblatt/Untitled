@@ -82,7 +82,8 @@ def browseStatic():
 
 @app.route("/browse/<int:page>")
 def browse(page):
-    numStories = getNumStories()
+    storyids = getStoryIDsByTime()
+    numStories = len(storyids)
     if numStories % 10 == 0:
         totalPage = numStories / 10
     else:
@@ -91,16 +92,15 @@ def browse(page):
     storyid = (pg - 1) * 10
     l = []
     cat = []
- 
+
     for x in range(storyid, storyid + 10):
-        story = getStory(x)
-        if len(story) > 1:
-            cat.append(x)
-            cat.append(story[0])
-            cat.append(story[1])
-        else:
-            break
-        l.insert(0, cat)
+        if x >= numStories:
+            break;
+        story = getStory(storyids[x])
+        cat.append(storyids[x])
+        cat.append(story[0])
+        cat.append(" ".join(story[1:][0:300]))
+        l.append(cat)
         cat = []
         story = []
 
