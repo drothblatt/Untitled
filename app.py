@@ -268,7 +268,7 @@ def favorite():
     if "home" in request.form:
         return redirect(url_for("hohohome", username = username))
     if "browsing" in request.form:
-        return redirect(url_for("browseStory", storyid))
+        return redirect(url_for("browseStory", id=storyid))
     return redirect(url_for("browse", page = current))
 
 
