@@ -1,5 +1,5 @@
 # Untitled
-Softdev database project -- collab story engine
+Project for Software Development Class -- Crowd-Writing Story Engine
 
 > I wanted a perfect ending. Now I've learned, the hard way,
 > that some poems don't rhyme, and some stories don't have a clear beginning,
@@ -7,7 +7,7 @@ Softdev database project -- collab story engine
 > and making the best of it, without knowing what's going to happen next.
 > Delicious Ambiguity.
 >
->                               -Gilda Radner
+> -Gilda Radner
 
 ## Team
 | Name       | Role            |
