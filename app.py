@@ -256,6 +256,9 @@ def edit2(id):
     if not sentence:
         error = "Please enter something before submitting"
         return render_template("edit.html", d = d, s = session, err=error)
+     if sentence in "                                                       ":
+        error = "Please enter something before submitting"
+        return render_template("create.html", err = error, s = session)
     # if story has changed after the guy started editing
     elif getLastEditTime(id) > session["beginTime%d" % id]:
         warning = "Someone has changed the story after you started editing. You may want to reconsider your text."
