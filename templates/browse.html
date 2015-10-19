@@ -6,15 +6,24 @@
 
 
   {% if edit %}
-  {% if err %}
-  <div class="alert alert-danger">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Edit Failed!</strong> Sorry, someone else is editing this right now, please try again later.
-</div>
-
-  {% endif %}
   
   <h3>{{ d["title"] }}</h3>
+    <form method="POST" action="/favorite">
+        <input type="hidden" name="storyid" value="{{id}}">
+        <input type="hidden" name="browsing" value="such ductape">
+        <button type="submit" class="pull-right" data-toggle="tooltip"
+                                                 title="favorite/unfavorite"
+            style="margin-top:-23px;">
+            <img width="20px" 
+                 {% if favorited %}
+                    src="/static/star-filled.png"
+                 {% else %}
+                    src="/static/star-empty.png"
+                 {% endif %}
+            >
+        </button>
+    </form>
+
     <div class="dropdown pull-right" style="margin-top:-40px;">
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Contributors
       <span class="caret"></span></button>

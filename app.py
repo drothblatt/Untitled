@@ -178,7 +178,7 @@ def browse(page):
 
 
 @app.route("/browse/stories/<id>")
-def browseStory(id, err=False):
+def browseStory(id):
     if not id:
         return redirect(url_for("browse", page = 1))
     else:
@@ -189,7 +189,12 @@ def browseStory(id, err=False):
         st = " ".join(story[1:])
         d["story"] = st
         d["authors"] = authors
-        return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id, err = err);
+        if "username" not in session:
+            favorited = False
+        else:
+            user = session["username"]
+            favorited = id in detuple(getFavorites(user))
+        return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id, favorited = favorited);
 
 
 @app.route("/create", methods = ["GET", "POST"])
@@ -262,6 +267,8 @@ def favorite():
     current = storyids.index(storyid) / 10 + 1
     if "home" in request.form:
         return redirect(url_for("hohohome", username = username))
+    if "browsing" in request.form:
+        return redirect(url_for("browseStory", storyid))
     return redirect(url_for("browse", page = current))
 
 
