@@ -127,7 +127,7 @@ def register():
         if " " in username or "\t" in username:
             error = "You cannot have spaces in your username!"
             return render_template("register.html", err = error, s = session)
-        if (password = ""):
+        if (password == ""):
             error = "You cannot have no password!"
             return render_template("register.html", err = error, s = session)
         m = hashlib.md5()
