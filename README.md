@@ -76,7 +76,7 @@ For the most part is is pretty standard.
 - [x] 2015-10-16: Create favorite system
 - [x] 2015-10-17: Finish favorite
 - [x] 2015-10-18: PENTEST
-- [ ] 2015-10-19: Demo
+- [x] 2015-10-19: Demo
 
 ## TODO
 - [ ] Add privilaged (admin) level users
