@@ -228,8 +228,8 @@ def create():
         else:
             storyid = getNumStories()
             author = session["username"]
-            addSentence(storyid, title, author)
-            addSentence(storyid, sentence, author)
+            addSentence(storyid, title.strip(), author)
+            addSentence(storyid, sentence.strip(), author)
             return redirect(url_for("browse", page = 1))
 
 
@@ -256,7 +256,7 @@ def edit2(id):
     if not sentence:
         error = "Please enter something before submitting"
         return render_template("edit.html", d = d, s = session, err=error)
-     if sentence.isspace():
+    if sentence.isspace():
         error = "Please enter something before submitting"
         return render_template("create.html", err = error, s = session)
     # if story has changed after the guy started editing
@@ -266,7 +266,7 @@ def edit2(id):
         return render_template("edit.html", d = d, s = session, warn=warning, original = sentence)
     else:
         author = session["username"]
-        addSentence(id, sentence, author)
+        addSentence(id, sentence.strip(), author)
         return redirect(url_for("browseStory", id = id))
 
 @app.route("/favorite") # why would they ever be here
