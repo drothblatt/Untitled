@@ -69,7 +69,7 @@ For the most part is is pretty standard.
 - edit
 - favorite
 
-## Agenda
+## Development Log
 - [x] 2015-10-13: Finsih overarching design, finish login system
 - [x] 2015-10-14: Finish setting datatable
 - [x] 2015-10-15: Finish adding stories
@@ -77,3 +77,10 @@ For the most part is is pretty standard.
 - [x] 2015-10-17: Finish favorite
 - [x] 2015-10-18: PENTEST
 - [ ] 2015-10-19: Demo
+
+## TODO
+- [ ] Add privilaged (admin) level users
+- [ ] Add ability to sort by number of favorites
+- [ ] Add more info to browse (last time edited/num of people who favorited a story/length of a story)
+- [ ] Add user level by chars contributed
+- [ ] Add SOME styling to edit (newline, new paragraphs)
