@@ -178,6 +178,8 @@ def getEditedFavorites(username):
             myLastEdit = myLastEdit[0][0]
             if lastEdit > myLastEdit:
                 editedFaves.append(el)
+        else:
+            editedFaves.append(el)
     return editedFaves
 # input: author
 # returns: a list of storyids that the author contributed to sorted in order of

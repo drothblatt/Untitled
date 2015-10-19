@@ -53,6 +53,7 @@ def hohohome(username):
 def userHome(username, page):
     faves = detuple(getFavorites(username))
     editedFaves = detuple(getEditedFavorites(username))
+    print editedFaves
     numStories = len(faves)
     if numStories % 10 == 0:
         totalPage = numStories / 10
