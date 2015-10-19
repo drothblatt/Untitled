@@ -123,6 +123,10 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
+        if " " in username or "\t" in username:
+            error = "You cannot have spaces in your username!"
+            return render_template("register.html", err = error, s = session)
+
         m = hashlib.md5()
         m.update(password)
         passhash = m.hexdigest()
@@ -130,7 +134,7 @@ def register():
             smsg = "You will be redirected to the log-in page in a moment."
             return render_template("register.html", success = smsg, s = session);
 
-        error = "Username already in use"
+        error = "Username already in use!"
         return render_template("register.html", err = error, s = session)
 
 
