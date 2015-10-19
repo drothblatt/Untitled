@@ -6,8 +6,8 @@ Softdev database project -- collab story engine
 > middle, and end.Life is about not knowing, having to change, taking the moment
 > and making the best of it, without knowing what's going to happen next.
 > Delicious Ambiguity.
+>
 >                               -Gilda Radner
-
 
 ## Team
 | Name       | Role            |
@@ -17,58 +17,53 @@ Softdev database project -- collab story engine
 |Michael M.  | Backend         |
 |Sally B.    | Middleware      |
 
-## Features
-- Sign Up / login / logout
-    - Sessions / automatic logout after 20 min. of inactivity
-- Edit stories (1 sentence at a time with some char limit)
-- View other stories (open pre-edited version)
-- Sentence-based database
-- Favorite a story
-- Notifications
+## Description
+This is a crowd-writing engine in which everyone can contribute to a story. In
+this place, everyone can create their own story or edit the existing work of
+someone else. However, there is a catch that one person can enter 140
+characters (or 300 if they're creating a story) at a time. This way, the
+final story would be an interesting mix of different people's inputs.
 
-## Backend Design
-### Data-tables
-stories data-table (story ID, sentence, author, time)
+The site also allows individual users to favorite or bookmark stories they like
+and get updates about them in their home page.
 
+## Design and Toolset
+### Backend
+This project was built with sqlite3 and flask on the back end. It has 3 main
+data-tables, one holding stories, one holding the users, and one holding the
+favorites.
 
-users data-table (username, password-hash)
+Each story is assigned an ID number. The stories data table has columns id,
+sentence, author and time. Whever an author adds a new sentence, a new row is
+added into the stories data table. The story is then gathered by sorting all
+sentences by time stamp. With the first sentence being the title, and
+everything else making up the story.
 
+The favorite data table has columns of user and story id, and it's just simple
+lookup/addition/deletion to check/add/remove favorites.
 
-favorites data-table (username, storyID)
+The user data table is pretty standard, with columns of username and hash of the
+password.
 
-## Frontend
-Nav bar on the left side with sign up, log in
+### Frontend
+The front end of the project is built with jinja2, bootstrap and jQuery. There
+is a master html which makes up the heading and is extended by every other page.
+For the most part is is pretty standard.
 
-Search bar
-
-Browse menu
-
-Username drop down menu to log out when logged in
-
-Alerts/Notifications when stories are updated
-
-Separate boxes for displaying stories/contributors
-
-Favorite button for stories
-
-Edit and save buttons on the bottom of stories
-
-## Middleware Design
-###Routes
-
+#### Routes
 - home
+- about
 - login/logout
 - register
 - browse
 - create
-
-
+- edit
 
 ## Agenda
-- [ ] 2015-10-13: Finsih overarching design, finish login system
-- [ ] 2015-10-14: Finish setting datatable
-- [ ] 2015-10-15: Finish adding stories
-- [ ] 2015-10-16: Create favorite system
-- [ ] 2015-10-17: Finish favorite
-- [ ] 2015-10-18: PENTEST
-- [ ] 2015-10-19: ~~submit~~
+- [x] 2015-10-13: Finsih overarching design, finish login system
+- [x] 2015-10-14: Finish setting datatable
+- [x] 2015-10-15: Finish adding stories
+- [x] 2015-10-16: Create favorite system
+- [x] 2015-10-17: Finish favorite
+- [x] 2015-10-18: PENTEST
+- [ ] 2015-10-19: Demo
