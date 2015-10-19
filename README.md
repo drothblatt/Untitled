@@ -1,5 +1,4 @@
-#
-<img src="https://raw.githubusercontent.com/alex-wyc/Untitled/master/static/Logo%20With%20Title.png" height="60px" alt-text = "Logo Text">
+#<img src="https://raw.githubusercontent.com/alex-wyc/Untitled/master/static/Logo%20With%20Title.png" height="45px" alt-text = "Logo Text">
 Project for Software Development Class -- Crowd-Writing Story Engine
 
 > I wanted a perfect ending. Now I've learned, the hard way,
