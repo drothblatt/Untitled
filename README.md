@@ -19,10 +19,9 @@ Project for Software Development Class -- Crowd-Writing Story Engine
 
 ## Description
 This is a crowd-writing engine in which everyone can contribute to a story. In
-this place, everyone can create their own story or edit the existing work of
-someone else. However, there is a catch that one person can enter 140
+this place, everyone can create their own stories or edit someone else's existing work. However, the catch is that one person can only enter 140
 characters (or 300 if they're creating a story) at a time. This way, the
-final story would be an interesting mix of different people's inputs.
+final story will be an interesting mix of different people's inputs.
 
 The site also allows individual users to favorite or bookmark stories they like
 and get updates about them in their home page.
@@ -36,14 +35,13 @@ favorites.
 Each story is assigned an ID number. The stories data table has columns id,
 sentence, author and time. Whever an author adds a new sentence, a new row is
 added into the stories data table. The story is then gathered by sorting all
-sentences by time stamp. With the first sentence being the title, and
+sentences by time stamp, with the first sentence being the title, and
 everything else making up the story.
 
-The favorite data table has columns of user and story id, and it's just simple
+The favorites data table has columns for user and story id, and it's just simple
 lookup/addition/deletion to check/add/remove favorites.
 
-The user data table is pretty standard, with columns of username and hash of the
-password.
+The user data table is pretty standard, with columns for username and for password hashes.
 
 ### Frontend
 The front end of the project is built with jinja2, bootstrap and jQuery. There
@@ -58,6 +56,7 @@ For the most part is is pretty standard.
 - browse
 - create
 - edit
+- favorite
 
 ## Agenda
 - [x] 2015-10-13: Finsih overarching design, finish login system
