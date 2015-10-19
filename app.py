@@ -219,6 +219,12 @@ def create():
         if not title or not sentence:
             error = "Please enter something before submitting"
             return render_template("create.html", err = error, s = session)
+        if title in "                                                          ":
+            error = "Please enter something before submitting"
+            return render_template("create.html", err = error, s = session)
+        if sentence in "                                                       ":
+            error = "Please enter something before submitting"
+            return render_template("create.html", err = error, s = session)
         else:
             storyid = getNumStories()
             author = session["username"]
