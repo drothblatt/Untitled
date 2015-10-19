@@ -256,7 +256,7 @@ def edit2(id):
     if not sentence:
         error = "Please enter something before submitting"
         return render_template("edit.html", d = d, s = session, err=error)
-     if sentence in "                                                       ":
+     if sentence.isspace():
         error = "Please enter something before submitting"
         return render_template("create.html", err = error, s = session)
     # if story has changed after the guy started editing
