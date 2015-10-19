@@ -1,6 +1,14 @@
 # Untitled
 Softdev database project -- collab story engine
 
+> I wanted a perfect ending. Now I've learned, the hard way,
+> that some poems don't rhyme, and some stories don't have a clear beginning,
+> middle, and end.Life is about not knowing, having to change, taking the moment
+> and making the best of it, without knowing what's going to happen next.
+> Delicious Ambiguity.
+>                               -Gilda Radner
+
+
 ## Team
 | Name       | Role            |
 |------------|-----------------|
