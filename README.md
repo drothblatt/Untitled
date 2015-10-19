@@ -9,6 +9,17 @@ Project for Software Development Class -- Crowd-Writing Story Engine
 >
 > -Gilda Radner
 
+## Installation
+Make sure you have flask and sqlite3 installed, then simply run
+```bash
+python app.py
+```
+
+For more options, run
+```bash
+python app.py -h
+```
+
 ## Team
 | Name       | Role            |
 |------------|-----------------|

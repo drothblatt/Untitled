@@ -1,11 +1,22 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-import time, hashlib, sqlite3
+import time, hashlib
 from functools import wraps
 from database import *
 from datetime import timedelta
 from sys import argv
+import logging
 
 app = Flask(__name__)
+
+if "-q" in argv:
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
+
+if "-h" in argv:
+    print """options:
+python app.py -q: quiet mode
+python app.py <secret key>: sets secret key (default is 'potato')"""
+    exit()
 
 # automatically logs out after 10 min of inactivity
 @app.before_request
