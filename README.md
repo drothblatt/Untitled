@@ -1,4 +1,4 @@
-#![alt text](https://raw.githubusercontent.com/alex-wyc/Untitled/master/static/Logo%20With%20Title.png =254x60 "Logo Text")
+#<img stc="https://raw.githubusercontent.com/alex-wyc/Untitled/master/static/Logo%20With%20Title.png" height="60" alt-text = "Logo Text">
 Project for Software Development Class -- Crowd-Writing Story Engine
 
 > I wanted a perfect ending. Now I've learned, the hard way,
