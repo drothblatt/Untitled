@@ -1,4 +1,4 @@
-# Untitled ![alt text](https://raw.githubusercontent.com/alex-wyc/Untitled/master/static/Logo%20With%20Title.png "Logo Text")
+#![alt text](https://raw.githubusercontent.com/alex-wyc/Untitled/master/static/Logo%20With%20Title.png "Logo Text")
 Project for Software Development Class -- Crowd-Writing Story Engine
 
 > I wanted a perfect ending. Now I've learned, the hard way,
