@@ -130,6 +130,9 @@ def register():
         if (password == ""):
             error = "You cannot have no password!"
             return render_template("register.html", err = error, s = session)
+        if " " in password or "\t" in password:
+            error = "You cannot have spaces in your password!"
+            return render_template("register.html", err = error, s = session)
         m = hashlib.md5()
         m.update(password)
         passhash = m.hexdigest()
