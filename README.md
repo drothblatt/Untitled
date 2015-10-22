@@ -8,6 +8,7 @@
 |Rivera, Michael | Backend         |
 |Redozubov, Greg | Middleware      |
 
+------------------------------------------------------
 
 #<img src="https://raw.githubusercontent.com/alex-wyc/Untitled/master/static/Logo%20With%20Title.png" height="45px" alt-text = "Logo Text">
 Project for Software Development Class -- Crowd-Writing Story Engine
