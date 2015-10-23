@@ -1,24 +1,40 @@
-import sqlite3
-
+#import sqlite3
+import random
+from pymongo import MongoClient
 
 """THIS FILE IS USED TO CREATE THE BACKEND OF THE PROJECT, IT CREATES THE
 DATABASE FILE AND CREATES ITS TABLES. ALL FUNCTIONS REGARDING CHANGING THE
 DATABASE IS LOCATED AT database.py"""
 
-conn = sqlite3.connect("infos.db")
+#conn = sqlite3.connect("infos.db")
 
-c = conn.cursor()
+#c = conn.cursor()
 
-q = "CREATE TABLE %s (%s)" # format string for creating tables,
+connection = MongoClient()
+
+db = connection['blog']
+
+#~~~~~~~~~~~HAVE TO FIGURE OUT HOW TO MAKE TABLES~~~~~~~~~~~~~~~
+
+
+
+
+
+
+
+
+
+
+#q = "CREATE TABLE %s (%s)" # format string for creating tables,
                            # first formatter = name
                            # second formatter = arguments
 
-c.execute(q % ("users", "username TEXT, password TEXT")) # NOTE: hex string will do fine for hash
+#c.execute(q % ("users", "username TEXT, password TEXT")) # NOTE: hex string will do fine for hash
 
-c.execute(q % ("stories", "id INTEGER, sentence TEXT, author TEXT, time INTEGER"))
+#c.execute(q % ("stories", "id INTEGER, sentence TEXT, author TEXT, time INTEGER"))
 
-c.execute(q % ("favorites", "id INTEGER, username TEXT"))
+#c.execute(q % ("favorites", "id INTEGER, username TEXT"))
 
 
 
-conn.commit()
+#conn.commit()
