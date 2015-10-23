@@ -5,41 +5,38 @@ from time import time
 # returns: true if the username is NOT in the database, and a user is created
 # returns; false if the username has been taken
 def newUser(username, passwordHash):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
+    connection = MongoClient()
+    db = connection['pd6']
 
     q="""
     SELECT users.username
     FROM users
     WHERE users.username = ?
     """
-    usernames = c.execute(q, (username,)).fetchall()
+    usernames = db.users.find({'username':username})
     if len(usernames) == 0:
-        q="INSERT INTO users VALUES (?,?)"
-        c.execute(q, (username, passwordHash))
-        conn.commit()
+        db.users.insert({'username':username},{'password':passwordHash})
         return True
     else:
         return False
-    #TESTED, works right
+
 
 # input: username-passwordHash pair
 # output: true if the pair match, false if the pair does not
 def authenticate(uName, passwordHash):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
+    connection = MongoClient()
+    db = connection['pd6']
 
     q="""
     SELECT users.username, users.password
     FROM users
     WHERE users.username = ? and users.password = ?
     """
-    result = c.execute(q, (uName, passwordHash)).fetchall() # gets it as a list
+    result = db.users.find({'username':uName},{'password':passwordHash})
     if len(result) == 0:
         return False
     else:
         return True;
-    #TESTED, works right
 
 def getStory(storyID):
     conn = sqlite3.connect("infos.db")
