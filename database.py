@@ -1,4 +1,4 @@
-import sqlite3
+from pymongo import MongoClient
 from time import time
 
 # input: username, hash (hexstring) of user's password
