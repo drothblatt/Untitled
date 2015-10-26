@@ -18,6 +18,9 @@ stories: id, sentence, author, time
 comments: favorites, id, username
 """
 
+db.createCollection('users', { 'username': <text>,
+                              'password': <text> } )
+
 
 #q = "CREATE TABLE %s (%s)" # format string for creating tables,
                            # first formatter = name
