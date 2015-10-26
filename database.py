@@ -91,46 +91,48 @@ def changeFavorite(storyID, username):
         db.favorites.insert({'id':storyID},{'username':username})
 # removes favorite
     else:
-        q = """DELETE FROM favorites
-               WHERE favorites.username = ? AND favorites.id = ?
-            """
-        c.execute(q, (username, storyID))
-    conn.commit()
+        #q = """DELETE FROM favorites
+        #       WHERE favorites.username = ? AND favorites.id = ?
+        #    """
+        #c.execute(q, (username, storyID))
+        db.favorites.remove({'username':username},{'id':storyID})
+    #conn.commit()
 
 def getUniqueUsers(storyID):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
-
-    q = """SELECT stories.author
-           FROM stories
-           WHERE stories.id = ?
-           """
-    result = c.execute(q, (storyID,)).fetchall()
+    connection = MongoClient()
+    db = connection['untitled']
+    result = db.stories.find({'id':storyID})
+    #q = """SELECT stories.author
+    #       FROM stories
+    #       WHERE stories.id = ?
+    #       """
+    #result = c.execute(q, (storyID,)).fetchall()
     result = set(result)
     result = list(result)
     return result
 
 
 def getNumStories():
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
-
-    q = """SELECT stories.id
-           FROM stories
-           """
-    result = c.execute(q).fetchall()
+    connection = MongoClient()
+    db = connection['untitled']
+    result = db.stories.distinct('id')
+    #q = """SELECT stories.id
+    #       FROM stories
+    #       """
+    #result = c.execute(q).fetchall()
     length=len(set(result))
     return length;
 
 def getStoryIDsByTime():
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
-
-    q = """SELECT stories.id
-           FROM stories
-           ORDER BY stories.time DESC
-           """
-    result = c.execute(q).fetchall()
+    connection = MongoClient()
+    db = connection['untitled']
+    
+    result = db.stories.find().sort({'time':-1})
+    #q = """SELECT stories.id
+    #       FROM stories
+    #       ORDER BY stories.time DESC
+    #       """
+    #result = c.execute(q).fetchall()
 # unique-ify the result, but keep the order
     uqList = []
     for el in result:
@@ -139,38 +141,38 @@ def getStoryIDsByTime():
     return uqList
 
 def getFavorites(username):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
+    connection = MongoClient()
+    db = connection['untitled']
 
 
-    stories = []
-    q = """SELECT favorites.id
-           FROM favorites
-           WHERE favorites.username = ?"""
-
-    result = c.execute(q, (username,)).fetchall()
+    #stories = []
+    #q = """SELECT favorites.id
+    #       FROM favorites
+    #       WHERE favorites.username = ?"""
+    result = db.favorites.find({'username':username})
+    #result = c.execute(q, (username,)).fetchall()
     return result
 
 def getEditedFavorites(username):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
+    connection = MongoClient()
+    db = connection['untitled']
 
     result = getStoryIDsByTime()
 
     stories = []
-    q = """SELECT favorites.id
-           FROM favorites
-           WHERE favorites.username = ?"""
+    #q = """SELECT favorites.id
+    #       FROM favorites
+    #       WHERE favorites.username = ?"""
 
-    idList = c.execute(q, (username,)).fetchall()
+    idList = db.favorites.find({'username':username})
     editedFaves = []
     for el in idList:
         lastEdit = getLastEditTime(el[0])
-        q = """SELECT stories.time
-               FROM stories
-               WHERE stories.author = ? AND stories.id = ?
-               ORDER BY stories.time DESC"""
-        myLastEdit = c.execute(q, (username, el[0])).fetchall()
+        #q = """SELECT stories.time
+        #       FROM stories
+        #       WHERE stories.author = ? AND stories.id = ?
+        #       ORDER BY stories.time DESC"""
+        #myLastEdit = c.execute(q, (username, el[0])).fetchall()
         if len(myLastEdit) > 0:
             myLastEdit = myLastEdit[0][0]
             if lastEdit > myLastEdit:
