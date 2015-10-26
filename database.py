@@ -173,6 +173,7 @@ def getEditedFavorites(username):
         #       WHERE stories.author = ? AND stories.id = ?
         #       ORDER BY stories.time DESC"""
         #myLastEdit = c.execute(q, (username, el[0])).fetchall()
+        myLastEdit = db.stories.find({'username':username},{'id':storyID}).sort({'time':-1})
         if len(myLastEdit) > 0:
             myLastEdit = myLastEdit[0][0]
             if lastEdit > myLastEdit:
@@ -184,43 +185,45 @@ def getEditedFavorites(username):
 # returns: a list of storyids that the author contributed to sorted in order of
 # last time he edited them
 def getStoriesByContributor(contributor):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
+    connection = MongoClient()
+    db = connection['untitled']
 
-    q = """SELECT stories.id
-           FROM stories
-           WHERE author=?
-           ORDER BY stories.time DESC
-           """
+    #q = """SELECT stories.id
+    #       FROM stories
+    #       WHERE author=?
+    #       ORDER BY stories.time DESC
+    #       """
 
-    result = c.execute(q, (contributor,)).fetchall()
+    #result = c.execute(q, (contributor,)).fetchall()
+    result = db.stories.find({'author':contributor}).sort({'time':-1})
     uqList = []
     for el in result:
         uqList.append(el[0])
     return uqList
 
 def getLastEditTime(storyID):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
+    connection = MongoClient()
+    db = connection['untitled']
 
-    q = """SELECT stories.time
-           FROM stories
-           WHERE stories.id=?
-           ORDER BY stories.time DESC"""
+    #q = """SELECT stories.time
+    #       FROM stories
+    #       WHERE stories.id=?
+    #       ORDER BY stories.time DESC"""
 
-    result = c.execute(q, (storyID,)).fetchall()
+    #result = c.execute(q, (storyID,)).fetchall()
+    result = db.stories.find({'id':storyID}).sort({time " 1})
     return result[0][0]
 
 def getLastEditor(storyID):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
+    connection = MongoClient()
+    db = connection['untitled']
 
-    q = """SELECT stories.author
-           FROM stories
-           WHERE stories.id=?
-           ORDER BY stories.time DESC"""
-
-    result = c.execute(q, (storyID,)).fetchall()
+    #q = """SELECT stories.author
+    #       FROM stories
+    #       WHERE stories.id=?
+    #       ORDER BY stories.time DESC"""
+    db.stories.find({'id':storyID})
+    #result = c.execute(q, (storyID,)).fetchall()
     return result[0][0]
 
 
