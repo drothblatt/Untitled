@@ -6,7 +6,7 @@ from time import time
 # returns; false if the username has been taken
 def newUser(username, passwordHash):
     connection = MongoClient()
-    db = connection['pd6']
+    db = connection['untitled']
 
     #q="""
     #SELECT users.username
@@ -25,7 +25,7 @@ def newUser(username, passwordHash):
 # output: true if the pair match, false if the pair does not
 def authenticate(uName, passwordHash):
     connection = MongoClient()
-    db = connection['pd6']
+    db = connection['untitled']
 
     #q="""
     #SELECT users.username, users.password
@@ -40,7 +40,7 @@ def authenticate(uName, passwordHash):
 
 def getStory(storyID):
     connection = MongoClient()
-    db = connection['pd6']
+    db = connection['untitled']
 
     #q = """SELECT stories.sentence
     #       FROM stories
@@ -58,7 +58,7 @@ def getStory(storyID):
 
 def addSentence(storyID, sentence, author):
     connection = MongoClient()
-    db = connection['pd6']
+    db = connection['untitled']
 
     db.stories.insert({'storyID':storyID},{'sentence':sentence},{'author':author})
     #TESTED Works
@@ -76,17 +76,19 @@ def addSentence(storyID, sentence, author):
 #    return result
 
 def changeFavorite(storyID, username):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
-    q = """SELECT *
-           FROM favorites
-           WHERE favorites.username = ? AND favorites.id = ?
-           """
-    result = c.execute(q, (username, storyID)).fetchall()
+    connection = MongoClient()
+    db = connection['untitled']
+    #q = """SELECT *
+    #       FROM favorites
+    #       WHERE favorites.username = ? AND favorites.id = ?
+    #       """
+    result = db.favorites.find({'username':username},{'id':storyID})
+    #result = c.execute(q, (username, storyID)).fetchall()
 # newly favorited
     if len(result) == 0:
-        q = """INSERT INTO favorites VALUES (?, ?)"""
-        c.execute(q, (storyID, username))
+        #q = """INSERT INTO favorites VALUES (?, ?)"""
+        #c.execute(q, (storyID, username))
+        db.favorites.insert({'id':storyID},{'username':username})
 # removes favorite
     else:
         q = """DELETE FROM favorites
