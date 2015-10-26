@@ -8,11 +8,11 @@ def newUser(username, passwordHash):
     connection = MongoClient()
     db = connection['pd6']
 
-    q="""
-    SELECT users.username
-    FROM users
-    WHERE users.username = ?
-    """
+    #q="""
+    #SELECT users.username
+    #FROM users
+    #WHERE users.username = ?
+    #"""
     usernames = db.users.find({'username':username})
     if len(usernames) == 0:
         db.users.insert({'username':username},{'password':passwordHash})
@@ -27,11 +27,11 @@ def authenticate(uName, passwordHash):
     connection = MongoClient()
     db = connection['pd6']
 
-    q="""
-    SELECT users.username, users.password
-    FROM users
-    WHERE users.username = ? and users.password = ?
-    """
+    #q="""
+    #SELECT users.username, users.password
+    #FROM users
+    #WHERE users.username = ? and users.password = ?
+    #"""
     result = db.users.find({'username':uName},{'password':passwordHash})
     if len(result) == 0:
         return False
@@ -39,30 +39,28 @@ def authenticate(uName, passwordHash):
         return True;
 
 def getStory(storyID):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
+    connection = MongoClient()
+    db = connection['pd6']
 
-    q = """SELECT stories.sentence
-           FROM stories
-           WHERE stories.id = ?
-           ORDER BY time"""
-    result = c.execute(q, (storyID,)).fetchall()
+    #q = """SELECT stories.sentence
+    #       FROM stories
+    #       WHERE stories.id = ?
+    #       ORDER BY time"""
+    result = db.stories.find({'id':storyID}).sort({'time':-1})
     if len(result) == 0:
         return ""
     else:
         story = []
         for i in result:
-            story.append(i[0])
+            story.append(i.sentence)
         return story
     #TESTED: works
 
 def addSentence(storyID, sentence, author):
-    conn = sqlite3.connect("infos.db")
-    c = conn.cursor()
+    connection = MongoClient()
+    db = connection['pd6']
 
-    q = """INSERT INTO stories VALUES (?, ?, ?, ?)"""
-    c.execute(q, (storyID, sentence, author, int(time())))
-    conn.commit()
+    db.stories.insert({'storyID':storyID},{'sentence':sentence},{'author':author})
     #TESTED Works
 
 # return a list of favorite story ids
