@@ -12,14 +12,14 @@ db = connection['untitled']
 
 #Creates database for users, posts and comments
 
-if ("users" not in db.getCollectionNames()):
-    db.createCollection("users")
+if ("users" not in db.collection_names()):
+    db.create_collection("users")
     
-if ("posts" not in db.getCollectionNames()):
-    db.createCollection("posts")
+if ("posts" not in db.collection_names()):
+    db.create_collection("posts")
         
-if ("comments" not in db.getCollectionNames()):
-    db.createCollection("comments")
+if ("comments" not in db.collection_names()):
+    db.create_collection("comments")
 
 
 
