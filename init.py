@@ -22,6 +22,10 @@ if ("comments" not in db.collection_names()):
     db.create_collection("comments")
 
 
+    
+db.users.insert({username: "Guest", password: "Guest"})
+db.stories.insert({id: 1, sentence: "Heyyo guys, it's a test",  author: "Guest", time: 0})
+
 
 
 
