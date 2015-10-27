@@ -15,8 +15,8 @@ db = connection['untitled']
 if ("users" not in db.collection_names()):
     db.create_collection("users")
     
-if ("posts" not in db.collection_names()):
-    db.create_collection("posts")
+if ("stories" not in db.collection_names()):
+    db.create_collection("stories")
         
 if ("comments" not in db.collection_names()):
     db.create_collection("comments")
