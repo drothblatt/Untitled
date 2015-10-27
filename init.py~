@@ -10,20 +10,6 @@ connection = MongoClient()
 db = connection['untitled']
 
 
-#Creates database for users, posts and comments
-
-if ("users" in db.collection_names()):
-    db.createCollection("users")
-    
-if ("posts" in db.collection_names()):
-    db.createCollection("posts")
-        
-if ("comments" in db.collection_names()):
-    db.createCollection("comments")
-
-
-
-
 
 """
 COLLECTIONS 
