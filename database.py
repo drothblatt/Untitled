@@ -211,7 +211,7 @@ def getLastEditTime(storyID):
     #       ORDER BY stories.time DESC"""
 
     #result = c.execute(q, (storyID,)).fetchall()
-    result = db.stories.find({'id':storyID}).sort({time " 1})
+    result = db.stories.find({'id':storyID}).sort({'time':-1})
     return result[0][0]
 
 def getLastEditor(storyID):
