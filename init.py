@@ -23,8 +23,8 @@ if ("comments" not in db.collection_names()):
 
 
     
-db.users.insert({username: "Guest", password: "Guest"})
-db.stories.insert({id: 1, sentence: "Heyyo guys, it's a test",  author: "Guest", time: 0})
+db.users.insert({'username': "Guest", 'password': "Guest"})
+db.stories.insert({'id': 1, 'sentence': "Heyyo guys, it's a test" , 'author': "Guest", 'time': 0})
 
 
 

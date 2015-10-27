@@ -14,6 +14,7 @@ def newUser(username, passwordHash):
     #WHERE users.username = ?
     #"""
     usernames = db.users.find({'username':username})
+    print usernames
     if len(usernames) == 0:
         db.users.insert({'username':username},{'password':passwordHash})
         return True
