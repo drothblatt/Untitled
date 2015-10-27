@@ -12,13 +12,13 @@ db = connection['untitled']
 
 #Creates database for users, posts and comments
 
-if ("users" in db.collection_names()):
+if ("users" not in db.getCollectionNames()):
     db.createCollection("users")
     
-if ("posts" in db.collection_names()):
+if ("posts" not in db.getCollectionNames()):
     db.createCollection("posts")
         
-if ("comments" in db.collection_names()):
+if ("comments" not in db.getCollectionNames()):
     db.createCollection("comments")
 
 
@@ -32,8 +32,8 @@ stories: id, sentence, author, time
 comments: favorites, id, username
 """
 
-db.createCollection('users', { 'username': <text>,
-                              'password': <text> } )
+#db.createCollection('users', { 'username': <text>,
+#                              'password': <text> } )
 
 
 #q = "CREATE TABLE %s (%s)" # format string for creating tables,
