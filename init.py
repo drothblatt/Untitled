@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import random
+import datetime
 
 """THIS FILE IS USED TO CREATE THE BACKEND OF THE PROJECT, IT CREATES THE
 DATABASE FILE AND CREATES ITS TABLES. ALL FUNCTIONS REGARDING CHANGING THE
@@ -24,8 +25,16 @@ if ("comments" not in db.collection_names()):
 
     
 db.users.insert({'username': "Guest", 'password': "Guest"})
-db.stories.insert({'id': 1, 'sentence': "Heyyo guys, it's a test" , 'author': "Guest", 'time': 0})
+db.stories.insert({'id': 1, 'sentence': "Heyyo guys, it's a test" ,
+                   'author': "Guest", 'time': datetime.datetime.utcnow() })
 
+results = db.users.find({'username': "Guest"})
+for r in results:
+    print r
+results = db.stories.find({'author': "Guest"})
+for r in results:
+    print r
+    
 
 
 
