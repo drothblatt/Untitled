@@ -1,3 +1,4 @@
+import pymongo
 from pymongo import MongoClient
 from time import time
 
@@ -47,7 +48,7 @@ def getStory(storyID):
     #       FROM stories
     #       WHERE stories.id = ?
     #       ORDER BY time"""
-    result = db.stories.find({'id':storyID}).sort({'time',pymongo.DESCENDING})
+    result = db.stories.find({'id':storyID}).sort(['time',pymongo.DESCENDING])
     if len(result) == 0:
         return ""
     else:
@@ -128,7 +129,7 @@ def getStoryIDsByTime():
     connection = MongoClient()
     db = connection['untitled']
     
-    result = db.stories.find().sort({'time',pymongo.DESCENDING})
+    result = db.stories.find().sort(['time',pymongo.DESCENDING])
     #q = """SELECT stories.id
     #       FROM stories
     #       ORDER BY stories.time DESC
@@ -174,7 +175,7 @@ def getEditedFavorites(username):
         #       WHERE stories.author = ? AND stories.id = ?
         #       ORDER BY stories.time DESC"""
         #myLastEdit = c.execute(q, (username, el[0])).fetchall()
-        myLastEdit = db.stories.find({'username':username},{'id':storyID}).sort({'time':-1})
+        myLastEdit = db.stories.find({'username':username},{'id':storyID}).sort(['time',pymongo.DESCENDING])
         if len(myLastEdit) > 0:
             myLastEdit = myLastEdit[0][0]
             if lastEdit > myLastEdit:
@@ -196,7 +197,7 @@ def getStoriesByContributor(contributor):
     #       """
 
     #result = c.execute(q, (contributor,)).fetchall()
-    result = db.stories.find({'author':contributor}).sort({'time',pymongo.DESCENDING})
+    result = db.stories.find({'author':contributor}).sort(['time',pymongo.DESCENDING])
     uqList = []
     for el in result:
         uqList.append(el[0])
@@ -212,7 +213,7 @@ def getLastEditTime(storyID):
     #       ORDER BY stories.time DESC"""
 
     #result = c.execute(q, (storyID,)).fetchall()
-    result = db.stories.find({'id':storyID}).sort({'time',pymongo.DESCENDING})
+    result = db.stories.find({'id':storyID}).sort(['time',pymongo.DESCENDING])
     return result[0][0]
 
 def getLastEditor(storyID):
