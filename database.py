@@ -15,14 +15,28 @@ def newUser(username, passwordHash):
     #WHERE users.username = ?
     #"""
     usernames = db.users.find({'username':username})
-    print usernames
-    if len(usernames) == 0:
+    userL = []
+    for user in usernames:
+        userL.append(user)
+    print len(userL)
+    if len(userL) == 0:
+        print "herro"
         db.users.insert({'username':username},{'password':passwordHash})
+        res = db.users.find()
+        for r in res:
+            print r
         return True
     else:
         return False
 
+def checkUsers():
+    connection = MongoClient()
+    db = connection['untitled']
 
+    current_users = db.users.find()
+    for user in users:
+        print user
+        
 # input: username-passwordHash pair
 # output: true if the pair match, false if the pair does not
 def authenticate(uName, passwordHash):
@@ -227,6 +241,13 @@ def getLastEditor(storyID):
     db.stories.find({'id':storyID})
     #result = c.execute(q, (storyID,)).fetchall()
     return result[0][0]
+
+
+#ewUser("yeech", "12345")
+#ewUser("hatzimotses", "letsgomets")
+#ewUser("nspektor", "gadget")
+#ewUser("mgriv", "sdallday")
+print newUser("rmelucci", "bigsibs")
 
 
 """
