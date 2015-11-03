@@ -5,54 +5,44 @@ from time import time
 # input: username, hash (hexstring) of user's password
 # returns: true if the username is NOT in the database, and a user is created
 # returns; false if the username has been taken
-def newUser(username, passwordHash):
+def newUser(username, passwordHash): # TESTED
     connection = MongoClient()
     db = connection['untitled']
 
-    #q="""
-    #SELECT users.username
-    #FROM users
-    #WHERE users.username = ?
-    #"""
     usernames = db.users.find({'username':username})
     userL = []
     for user in usernames:
         userL.append(user)
-    print len(userL)
     if len(userL) == 0:
-        print "herro"
-        db.users.insert({'username':username},{'password':passwordHash})
-        res = db.users.find()
-        for r in res:
-            print r
+        db.users.insert({'username': username, 'password':passwordHash})
         return True
     else:
         return False
 
-def checkUsers():
+def checkUsers(): # TESTED
     connection = MongoClient()
     db = connection['untitled']
 
     current_users = db.users.find()
-    for user in users:
+    for user in current_users:
         print user
         
 # input: username-passwordHash pair
 # output: true if the pair match, false if the pair does not
-def authenticate(uName, passwordHash):
+
+def authenticate(uName, passwordHash):  # TESTED
     connection = MongoClient()
     db = connection['untitled']
 
-    #q="""
-    #SELECT users.username, users.password
-    #FROM users
-    #WHERE users.username = ? and users.password = ?
-    #"""
-    result = db.users.find({'username':uName},{'password':passwordHash})
-    if len(result) == 0:
+    username = db.users.find({'username':uName, 'password':passwordHash})
+    userL = []
+    for u in username:
+        userL.append(u)
+    if len(userL) == 0:
         return False
     else:
-        return True;
+        return True
+
 
 def getStory(storyID):
     connection = MongoClient()
@@ -243,12 +233,11 @@ def getLastEditor(storyID):
     return result[0][0]
 
 
-#ewUser("yeech", "12345")
-#ewUser("hatzimotses", "letsgomets")
-#ewUser("nspektor", "gadget")
-#ewUser("mgriv", "sdallday")
-print newUser("rmelucci", "bigsibs")
-
+print newUser("pralowe","123456")
+print "-----"
+print checkUsers()
+print "-----"
+print authenticate("pralowe", "123456")
 
 """
 print newUser("yeech", "12345")
