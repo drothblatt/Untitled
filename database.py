@@ -52,14 +52,15 @@ def getStory(storyID):
     #       FROM stories
     #       WHERE stories.id = ?
     #       ORDER BY time"""
-    result = db.stories.find({'id':storyID}).sort(['time',pymongo.DESCENDING])
-    if len(result) == 0:
+    result = db.stories.find({'id':storyID}).sort(['time',pymongo.DESCENDING])  
+    story = []
+    for i in result:
+        story.append(i.sentence)
+    if len(story) == 0:
         return ""
     else:
-        story = []
-        for i in result:
-            story.append(i.sentence)
         return story
+
     #TESTED: works
 
 def addSentence(storyID, sentence, author):
@@ -237,7 +238,9 @@ print newUser("pralowe","123456")
 print "-----"
 print checkUsers()
 print "-----"
-print authenticate("pralowe", "123456")
+print authenticate("david_r", "hello123")
+print "______"
+print getStory(1)
 
 """
 print newUser("yeech", "12345")
