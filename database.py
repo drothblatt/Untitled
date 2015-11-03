@@ -49,7 +49,7 @@ def authenticate(uName, passwordHash):
     #WHERE users.username = ? and users.password = ?
     #"""
     result = db.users.find({'username':uName},{'password':passwordHash})
-    if len(result) == 0:
+    if result.count() == 0:
         return False
     else:
         return True;
@@ -62,13 +62,13 @@ def getStory(storyID):
     #       FROM stories
     #       WHERE stories.id = ?
     #       ORDER BY time"""
-    result = db.stories.find({'id':storyID}).sort(['time',pymongo.DESCENDING])
-    if len(result) == 0:
+    result = db.stories.find({'id':storyID}).sort([('time',pymongo.DESCENDING),('id',pymongo.DESCENDING)])
+    if result.count() == 0:
         return ""
     else:
         story = []
         for i in result:
-            story.append(i.sentence)
+            story.append(i['sentence'])
         return story
     #TESTED: works
 
@@ -143,7 +143,7 @@ def getStoryIDsByTime():
     connection = MongoClient()
     db = connection['untitled']
     
-    result = db.stories.find().sort(['time',pymongo.DESCENDING])
+    result = db.stories.find().sort([('time',pymongo.DESCENDING),('id',pymongo.DESCENDING)])
     #q = """SELECT stories.id
     #       FROM stories
     #       ORDER BY stories.time DESC
@@ -152,8 +152,8 @@ def getStoryIDsByTime():
 # unique-ify the result, but keep the order
     uqList = []
     for el in result:
-        if el[0] not in uqList:
-            uqList.append(el[0])
+        if el['id'] not in uqList:
+            uqList.append(el['id'])
     return uqList
 
 def getFavorites(username):
@@ -238,16 +238,16 @@ def getLastEditor(storyID):
     #       FROM stories
     #       WHERE stories.id=?
     #       ORDER BY stories.time DESC"""
-    db.stories.find({'id':storyID})
+    result = db.stories.find({'id':storyID}).sort([('time',pymongo.DESCENDING),('id',pymongo.DESCENDING)])
     #result = c.execute(q, (storyID,)).fetchall()
-    return result[0][0]
+    return result[0]['author']
 
 
 #ewUser("yeech", "12345")
 #ewUser("hatzimotses", "letsgomets")
 #ewUser("nspektor", "gadget")
 #ewUser("mgriv", "sdallday")
-print newUser("rmelucci", "bigsibs")
+#print newUser("rmelucci", "bigsibs")
 
 
 """
