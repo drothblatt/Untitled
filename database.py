@@ -126,8 +126,17 @@ def getUniqueUsers(storyID):
     #       WHERE stories.id = ?
     #       """
     #result = c.execute(q, (storyID,)).fetchall()
-    result = list(result)
-    return result
+    u = []
+    for i in result:
+        ok = True
+        for e in u:
+            if i['author'] in e:
+                ok = False
+        if ok:
+            q = [1]
+            q[0] = i['author']
+            u.append(q)
+    return u
 
 
 def getNumStories():
