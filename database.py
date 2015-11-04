@@ -136,7 +136,7 @@ def getNumStories():
     #       FROM stories
     #       """
     #result = c.execute(q).fetchall()
-    length=len(set(result))
+    length=len(result)
     return length;
 
 def getStoryIDsByTime():
