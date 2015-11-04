@@ -75,8 +75,8 @@ def getStory(storyID):
 def addSentence(storyID, sentence, author):
     connection = MongoClient()
     db = connection['untitled']
-
-    db.stories.insert({'storyID':storyID},{'sentence':sentence},{'author':author})
+    q = int(time())
+    db.stories.insert({'id':storyID},{'sentence':sentence},{'author':author},{'time':q})
     #TESTED Works
 
 # return a list of favorite story ids
