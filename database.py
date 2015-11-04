@@ -62,7 +62,7 @@ def getStory(storyID):
     #       FROM stories
     #       WHERE stories.id = ?
     #       ORDER BY time"""
-    result = db.stories.find({'id':storyID}).sort([('time',pymongo.DESCENDING),('id',pymongo.DESCENDING)])
+    result = db.stories.find({'id':storyID}).sort([('time',pymongo.ASCENDING),('id',pymongo.DESCENDING)])
     if result.count() == 0:
         return ""
     else:
@@ -165,33 +165,34 @@ def getFavorites(username):
     #q = """SELECT favorites.id
     #       FROM favorites
     #       WHERE favorites.username = ?"""
-    result = db.favorites.find({'username':username})
+    result = db.favorites.find({'username':username}).sort([('time',pymongo.DESCENDING),('id',pymongo.DESCENDING)])
+    uqList = []
+    for el in result:
+        if el['id'] not in uqList:
+            uqList.append(el['id'])
     #result = c.execute(q, (username,)).fetchall()
-    return result
+    return uqList
 
 def getEditedFavorites(username):
     connection = MongoClient()
     db = connection['untitled']
-
     result = getStoryIDsByTime()
-
     stories = []
     #q = """SELECT favorites.id
     #       FROM favorites
     #       WHERE favorites.username = ?"""
-
-    idList = db.favorites.find({'username':username})
+    idList = db.favorites.find({'username':username}).sort([('time',pymongo.DESCENDING),('id',pymongo.DESCENDING)])
     editedFaves = []
     for el in idList:
-        lastEdit = getLastEditTime(el[0])
+        lastEdit = getLastEditTime(el['id'])
         #q = """SELECT stories.time
         #       FROM stories
         #       WHERE stories.author = ? AND stories.id = ?
         #       ORDER BY stories.time DESC"""
         #myLastEdit = c.execute(q, (username, el[0])).fetchall()
-        myLastEdit = db.stories.find({'username':username},{'id':storyID}).sort(['time',pymongo.DESCENDING])
+        myLastEdit = db.stories.find({'username':username},{'id':storyID}).sort([('time',pymongo.DESCENDING),('id',pymongo.DESCNEDING)])
         if len(myLastEdit) > 0:
-            myLastEdit = myLastEdit[0][0]
+            myLastEdit = myLastEdit[0]['time']
             if lastEdit > myLastEdit:
                 editedFaves.append(el)
         else:
@@ -227,8 +228,8 @@ def getLastEditTime(storyID):
     #       ORDER BY stories.time DESC"""
 
     #result = c.execute(q, (storyID,)).fetchall()
-    result = db.stories.find({'id':storyID}).sort(['time',pymongo.DESCENDING])
-    return result[0][0]
+    result = db.stories.find({'id':storyID}).sort([('time',pymongo.DESCENDING),('id',pymongo.DESCENDING)])
+    return result[0]['time']
 
 def getLastEditor(storyID):
     connection = MongoClient()

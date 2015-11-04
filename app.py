@@ -62,7 +62,7 @@ def hohohome(username):
 @app.route("/home/<username>/<int:page>")
 @login_required
 def userHome(username, page):
-    faves = detuple(getFavorites(username))
+    faves = getFavorites(username)
     editedFaves = detuple(getEditedFavorites(username))
     #print editedFaves
     numStories = len(faves)

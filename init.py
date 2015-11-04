@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import random
-import datetime
+import time
 
 """THIS FILE IS USED TO CREATE THE BACKEND OF THE PROJECT, IT CREATES THE
 DATABASE FILE AND CREATES ITS TABLES. ALL FUNCTIONS REGARDING CHANGING THE
@@ -23,10 +23,10 @@ if ("comments" not in db.collection_names()):
     db.create_collection("comments")
 
 
-    
+q = int(time())
 db.users.insert({'username': "Guest", 'password': "Guest"})
 db.stories.insert({'id': 1, 'sentence': "Heyyo guys, it's a test" ,
-                   'author': "Guest", 'time': datetime.datetime.utcnow() })
+                   'author': "Guest", 'time':q})
 
 results = db.users.find({'username': "Guest"})
 for r in results:
