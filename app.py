@@ -237,7 +237,7 @@ def create():
             error = "Please enter something before submitting"
             return render_template("create.html", err = error, s = session)
         else:
-            storyid = getNumStories()
+            storyid = getNumStories() + 1
             author = session["username"]
             addSentence(storyid, title.strip(), author)
             addSentence(storyid, sentence.strip(), author)

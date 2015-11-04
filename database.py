@@ -101,7 +101,7 @@ def changeFavorite(storyID, username):
     result = db.favorites.find({'username':username},{'id':storyID})
     #result = c.execute(q, (username, storyID)).fetchall()
 # newly favorited
-    if len(result) == 0:
+    if result.count() == 0:
         #q = """INSERT INTO favorites VALUES (?, ?)"""
         #c.execute(q, (storyID, username))
         db.favorites.insert({'id':storyID},{'username':username})
@@ -136,6 +136,7 @@ def getNumStories():
     #       """
     #result = c.execute(q).fetchall()
     length=len(result)
+    print "????????????????????????????????????\n"+str(length)
     return length;
 
 def getStoryIDsByTime():
