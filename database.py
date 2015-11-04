@@ -117,13 +117,12 @@ def changeFavorite(storyID, username):
 def getUniqueUsers(storyID):
     connection = MongoClient()
     db = connection['untitled']
-    result = db.stories.find({'id':storyID})
+    result = db.stories.find({'id':storyID}).sort([('time',pymongo.DESCENDING),('id',pymongo.DESCENDING)])
     #q = """SELECT stories.author
     #       FROM stories
     #       WHERE stories.id = ?
     #       """
     #result = c.execute(q, (storyID,)).fetchall()
-    result = set(result)
     result = list(result)
     return result
 
