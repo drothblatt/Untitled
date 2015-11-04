@@ -100,18 +100,21 @@ def changeFavorite(storyID, username):
     #       """
     result = db.favorites.find({'username':username},{'id':storyID})
     #result = c.execute(q, (username, storyID)).fetchall()
-# newly favorited
+    # newly favorited
+    print str(result.count()) + ":):D:("
     if result.count() == 0:
         #q = """INSERT INTO favorites VALUES (?, ?)"""
         #c.execute(q, (storyID, username))
-        db.favorites.insert({'id':storyID},{'username':username})
-# removes favorite
+        db.favorites.insert({'id':storyID,'username':username})
+        print "\nwaka\n"
+        # removes favorite
     else:
         #q = """DELETE FROM favorites
         #       WHERE favorites.username = ? AND favorites.id = ?
         #    """
         #c.execute(q, (username, storyID))
-        db.favorites.remove({'username':username},{'id':storyID})
+        db.favorites.remove({'username':username,'id':storyID})
+        print "\nwaka waka\n"
     #conn.commit()
 
 def getUniqueUsers(storyID):
@@ -136,7 +139,6 @@ def getNumStories():
     #       """
     #result = c.execute(q).fetchall()
     length=len(result)
-    print "????????????????????????????????????\n"+str(length)
     return length;
 
 def getStoryIDsByTime():
@@ -171,6 +173,7 @@ def getFavorites(username):
         if el['id'] not in uqList:
             uqList.append(el['id'])
     #result = c.execute(q, (username,)).fetchall()
+    print "????????????????????????????????????\n"+str(len(uqList))
     return uqList
 
 def getEditedFavorites(username):
@@ -190,13 +193,18 @@ def getEditedFavorites(username):
         #       WHERE stories.author = ? AND stories.id = ?
         #       ORDER BY stories.time DESC"""
         #myLastEdit = c.execute(q, (username, el[0])).fetchall()
-        myLastEdit = db.stories.find({'username':username},{'id':storyID}).sort([('time',pymongo.DESCENDING),('id',pymongo.DESCNEDING)])
+        result = db.stories.find().sort([('time',pymongo.DESCENDING),('id',pymongo.DESCENDING)])
+        myLastEdit = []
+        for el in result:
+            if el['id'] not in myLastEdit:
+                myLastEdit.append(el['id'])
         if len(myLastEdit) > 0:
-            myLastEdit = myLastEdit[0]['time']
+            myLastEdit = myLastEdit[0]
             if lastEdit > myLastEdit:
                 editedFaves.append(el)
         else:
             editedFaves.append(el)
+    print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"+str(len(editedFaves))
     return editedFaves
 # input: author
 # returns: a list of storyids that the author contributed to sorted in order of

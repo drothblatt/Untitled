@@ -10,7 +10,9 @@ connection = MongoClient()
 
 db = connection['untitled']
 
-
+#db.drop_collection("users")
+#db.drop_collection("stories")
+#db.drop_collection("comments")
 #Creates database for users, posts and comments
 
 if ("users" not in db.collection_names()):
@@ -19,14 +21,15 @@ if ("users" not in db.collection_names()):
 if ("stories" not in db.collection_names()):
     db.create_collection("stories")
         
-if ("comments" not in db.collection_names()):
-    db.create_collection("comments")
+if ("favorites" not in db.collection_names()):
+    db.create_collection("favorites")
 
 
-q = int(time())
+q = int(time.time())
 db.users.insert({'username': "Guest", 'password': "Guest"})
 db.stories.insert({'id': 1, 'sentence': "Heyyo guys, it's a test" ,
                    'author': "Guest", 'time':q})
+db.favorites.insert({'id':-1},{'username':"Guest"})
 
 results = db.users.find({'username': "Guest"})
 for r in results:

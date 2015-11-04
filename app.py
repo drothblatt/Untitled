@@ -63,7 +63,7 @@ def hohohome(username):
 @login_required
 def userHome(username, page):
     faves = getFavorites(username)
-    editedFaves = detuple(getEditedFavorites(username))
+    editedFaves = getEditedFavorites(username)
     #print editedFaves
     numStories = len(faves)
     if numStories % 10 == 0:
@@ -166,7 +166,7 @@ def browse(page):
         favorites = []
     else:
         user = session["username"]
-        favorites = detuple(getFavorites(user))
+        favorites = getFavorites(user)
     storyids = getStoryIDsByTime()
     numStories = len(storyids)
     if numStories % 10 == 0:
@@ -214,7 +214,7 @@ def browseStory(id):
             favorited = False
         else:
             user = session["username"]
-            favorited = id in detuple(getFavorites(user))
+            favorited = id in getFavorites(user)
         return render_template("browse.html", d = d, s = session, pages = 0, edit = True, id = id, favorited = favorited);
 
 
